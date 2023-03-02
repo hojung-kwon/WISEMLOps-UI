@@ -1,9 +1,12 @@
 <template>
-  <NuxtLayout :name="layout">
-    <NuxtPage/>
-  </NuxtLayout>
+  <div>
+    로그인페이지
+  </div>
 </template>
 
 <script setup>
-const layout = "login" 
+definePageMeta({
+  layout: "login",
+});
+
 </script>
