@@ -1,33 +1,114 @@
 <template>
 
-<va-sidebar>
+<va-sidebar
+    :minimized="minimized"
+    position="left"
+    class="colored-sidebar"
+>
   <Logo v-model:url="logoUrl" v-model:title="logoTitle"/>
-  <va-sidebar-item>
-    <va-sidebar-item-content>
-      <va-icon name="dashboard" />
-      <!-- User can hide item with css if he wants -->
-      <va-sidebar-item-title>Dashboard</va-sidebar-item-title>
-    </va-sidebar-item-content>
-  </va-sidebar-item>
-  <va-sidebar-item active>
-    <va-sidebar-item-content>
-      <va-icon name="room" />
-      <va-sidebar-item-title>Sidebar demo</va-sidebar-item-title>
-    </va-sidebar-item-content>
-  </va-sidebar-item>
-  <va-sidebar-item >
-    <va-sidebar-item-content>
-      <va-icon name="loop" />
-      <va-sidebar-item-title>Sidebar demo</va-sidebar-item-title>
-    </va-sidebar-item-content>
-  </va-sidebar-item>
+  <va-accordion v-model="accordionValue" multiple>
+    <va-collapse
+      v-for="(item, idx) in $props.menuItems"
+      :key="idx"
+      :class="{ expanded: accordionValue[idx] && item.subItems}"
+    >
+      <template #header>
+          <va-sidebar-item
+            @click="setRouteActive((item.path) ? item.path : '')"
+            :active="isRouteActive((item.path) ? item.path : '')"
+          >
+            <va-sidebar-item-content>
+              <va-icon :name="item.icon" />
+              <va-sidebar-item-title>{{ item.title }}</va-sidebar-item-title>
+              <va-icon v-if="item.subItems && !minimized" :name="accordionValue[idx] ? 'expand_less' : 'expand_more'" />
+            </va-sidebar-item-content>
+          </va-sidebar-item>
+      </template>
+      <va-sidebar-item
+        v-for="(subItem, idx) in item.subItems"
+        :key="idx"
+        @click="$event => setRouteActive(subItem.path)"
+        :active="isRouteActive(subItem.path)"
+      >
+        <va-sidebar-item-content>
+          <va-icon :name="item.icon" />
+          <va-sidebar-item-title>{{ subItem.title }}</va-sidebar-item-title>
+        </va-sidebar-item-content>
+      </va-sidebar-item>
+    </va-collapse>
+  </va-accordion>
 
 </va-sidebar>
 </template>
 
+<script setup lang="ts">
 
-<script setup>
+const router = useRouter();
+const route = useRoute();
+
+interface MenuItem {
+    id: string;
+    icon? : string;
+    title: string;
+    path?: string;
+    description?: string;
+    subItems?: {
+      id: string;
+      icon?: string;
+      title: string;
+      path: string;
+      description?: string;
+    }[]
+}
+
+interface Props {
+  menuItems: MenuItem[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  
+})
+
+// LOGO 관련
 const logoUrl = ref('/img/logo.png');
-// const logoUrl = ref('')
-const logoTitle = ref('관리도구 샘플 프로젝트')
+const logoTitle = ref('관리도구 샘플 프로젝트!!!!!')
+
+// SIDEBAR관련
+const minimized = ref(false);
+const accordionValue = ref([false, true]);
+const activeRouteName = ref('/'+route.name?.toString());
+
+const toggleSideMenu = () => {
+  minimized.value = (minimized.value) ? false : true;
+}
+
+const isRouteActive = ( path:string) => {
+  return activeRouteName.value == path;
+}
+
+const setRouteActive = ( path:string ) => {
+  if (path) {
+      activeRouteName.value = path
+      router.push(path)
+  }
+}
+
 </script>
+<style lang="scss" scoped>
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--va-background-primary);
+}
+.va-sidebar-item {
+  cursor: pointer;
+}
+
+.va-popover {
+  z-index: 99;
+}
+
+.expanded {
+  background-color: var(--va-background-primary);
+}
+</style>

@@ -2,14 +2,10 @@
   <div>
     <div class="main-body">
       <div class="side-menu">
-       <SideMenu />
+       <SideMenu v-model:menuItems="sideMenu" />
       </div>
       <div class="content body-height">
-        <va-navbar color="primary" class="main-nav" >
-          <template #right>
-            <va-navbar-item>Account</va-navbar-item>
-          </template>
-        </va-navbar>
+        <NavBar />
         <div class="container body-height">
           <slot />
         </div>
@@ -20,7 +16,11 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
+
+import { sideMenuData } from '~~/assets/data/sidemenu';
+
+const sideMenu = ref(sideMenuData);
 
 useHead({
   title: '기본페이지'
