@@ -63,7 +63,7 @@ export const sideMenuData = [
       },
       {
         id: 'sub3',
-        icon: 'info',
+        icon: 'help',
         title: 'Sub3',
         path: '/sub3',
         description: '하위메뉴3'

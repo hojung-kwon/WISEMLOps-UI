@@ -31,7 +31,7 @@
         :active="isRouteActive(subItem.path)"
       >
         <va-sidebar-item-content>
-          <va-icon :name="item.icon" />
+          <va-icon :name="subItem.icon" />
           <va-sidebar-item-title>{{ subItem.title }}</va-sidebar-item-title>
         </va-sidebar-item-content>
       </va-sidebar-item>
