@@ -5,7 +5,7 @@
        <SideMenu v-model:menuItems="sideMenu" />
       </div>
       <div class="content body-height">
-        <NavBar />
+        <NavBar :userId="userId" :userName="userName"/>
         <div class="container body-height">
           <slot />
         </div>
@@ -19,8 +19,11 @@
 <script setup lang="ts">
 
 import { sideMenuData } from '~~/assets/data/sidemenu';
-
 const sideMenu = ref(sideMenuData);
+
+const userId = ref('admin');
+const userName = ref('관리자');
+
 
 useHead({
   title: '기본페이지'
@@ -35,9 +38,7 @@ useHead({
     /* height: calc(100vh - 56px); */
     height: 100vh;
   }
-  .main-nav {
-    height: 56px;
-  }
+  
   .content {
     width: 100%;
   }
