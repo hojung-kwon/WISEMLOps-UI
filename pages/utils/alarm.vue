@@ -20,10 +20,6 @@
                 <va-alert color="#fdeae7" text-color="#940909">
                     Hello World! This is an alert with an important message and a custom background and text color!
                 </va-alert>
-
-                <va-alert color="warning" icon="warning">
-                    You read this important alert message with an icon
-                </va-alert>
             </fieldset>
 
             <fieldset>
@@ -34,6 +30,10 @@
                         <va-icon name="info" />
                     </template>
                     You read this important alert message with a slotted icon
+                </va-alert>
+
+                <va-alert color="warning" icon="warning">
+                    You read this important alert message with an icon
                 </va-alert>
 
                 <va-alert color="warning" outline>

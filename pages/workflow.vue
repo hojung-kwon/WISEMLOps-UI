@@ -1,8 +1,6 @@
 <template>
     <div>
         <va-button v-on:click="new WorkflowFunc().getJson()">SAVE</va-button>
-    </div>
-    <div>
         <workflow :setWorkflowJson="workflowJson" @getWorkflowJson="new WorkflowFunc().save" :operators="operatorList"></workflow>
     </div>
 </template>
@@ -45,5 +43,4 @@ class WorkflowFunc {
 </script>
 
 <style scoped>
-
 </style>

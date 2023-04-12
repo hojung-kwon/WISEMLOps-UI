@@ -1,7 +1,6 @@
 <template>
-  <va-alert id="alert-warning" color="#ce6e67" v-if="useAttributesAlert">수정중인 속성창을 먼저 닫아주세요.</va-alert>
+  <va-alert id="alert-warning" color="#ce6e67" v-if="attributeHandler.warningAlertState()">수정중인 속성창을 먼저 닫아주세요.</va-alert>
   <div style="height:calc( 100vh - 120px ); display:table" @drop="onDrop">
-
     <div style="display:table-row;">
       <va-sidebar style="display: table-cell;">
         <va-accordion
@@ -44,22 +43,32 @@
         </template>
       </VueFlow>
 
-      <workflow-detail v-if="useAttributes" :enabled="enabled" :operatorAttributes="propsOperatorAttributes" @saveBtn="saveBtn" @closeBtn="closeBtn"></workflow-detail>
+      <workflow-detail v-if="attributeHandler.attributesState()" :enabled="enabled" :operatorAttributes="workflow.getOperatorDetailInfo()" @saveBtn="save()" @closeBtn="close()"></workflow-detail>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { nextTick, watch } from 'vue'
+// 워크플로우 라이브러리
+import {nextTick, watch} from "vue";
 import {VueFlow, useVueFlow, MarkerType} from '@vue-flow/core'
 import { Background } from '@vue-flow/background'
 import { MiniMap } from '@vue-flow/minimap'
 import { Controls } from '@vue-flow/controls'
+const { findNode, onConnect, addEdges, addNodes, project, vueFlowRef, toObject } = useVueFlow();
+
+// 워크플로우 커스텀 기능
 import CustomNode from './CustomNode.vue'
 import CustomEdge from './CustomEdge.vue'
 
-import { defineEmits } from "vue";
+import OperatorDataTransfer, * as workflow from './ts/Workflow';
+import AttributeHandler from './ts/AttributeHandler';
+const attributeHandler = new AttributeHandler();
+
 const emit = defineEmits(["toggle-drawer"]);
+const DEFINE: any = {
+    WORKFLOW_SAVE_DATA: "getWorkflowJson"
+}
 
 interface Operators {
     "operatorName": string,
@@ -72,146 +81,116 @@ interface Props {
 };
 
 const props = withDefaults(defineProps<Props>(), {});
-const propsOperatorAttributes = ref({});
 const propsOperatorExpand = ref([ true, false ]);
 const enabled = ref("enabled");
-const DEFINE: any = {
-  WORKFLOW_SAVE_DATA: "getWorkflowJson"
+
+const save = () => {
+    emit(DEFINE.WORKFLOW_SAVE_DATA, toObject());
+    attributeHandler.attributesOff();
 }
 
-/*************************************/
-/********* 워크플로우 기본 기능 ********/
-/*************************************/
-const { findNode, onConnect, addEdges, addNodes, project, vueFlowRef, toObject } = useVueFlow();
-
-// 워크플로우 JSON 추출
-const allSave = () => {
-  emit(DEFINE.WORKFLOW_SAVE_DATA, toObject());
+const close = () => {
+    attributeHandler.attributesOff();
 }
 
-/*************************************/
-/***** 워크플로우 노드 및 엣지 연결 *****/
-/*************************************/
-onConnect((params) => {
-  let newEdge: any = {
-    id: "dndedge_" +new Date().getTime(),
-    source: params.source,
-    sourceHandle: params.sourceHandle,
-    target: params.target,
-    targetHandle: params.targetHandle,
-    type: "custom",
-    data: { text: "TEST" },
-    markerEnd: MarkerType.ArrowClosed
-  };
-  addEdges([newEdge]);
-  allSave();
+onConnect((params: any) => {
+    let edge = workflow.createEdge(params);
+    addEdges([edge]);
+    save();
 });
 
 const onDragStart = (event: any, nodeCategory: string, nodeAttributes: any) => {
-  if (event.dataTransfer) {
-    event.dataTransfer.setData('operatorLabel', "<b>[" +nodeCategory+ "]</b><br/>" +nodeAttributes.operatorName);
-    event.dataTransfer.setData('operatorName', nodeAttributes.operatorName);
-    event.dataTransfer.setData('operatorAttributes', JSON.stringify(nodeAttributes.attributes));
-    event.dataTransfer.effectAllowed = 'move'
-  }
+    if (event.dataTransfer) {
+        let dataTrasfer: OperatorDataTransfer = workflow.setOperatorDataTransfer(nodeCategory, nodeAttributes);
+
+        event.dataTransfer.setData('operatorLabel', dataTrasfer.operatorLabel);
+        event.dataTransfer.setData('operatorName', dataTrasfer.operatorName);
+        event.dataTransfer.setData('operatorAttributes', dataTrasfer.operatorAttributes);
+        event.dataTransfer.effectAllowed = 'move'
+    }
 }
 
 const onDragOver = (event: any) => {
-  event.preventDefault()
+    event.preventDefault()
 
-  if (event.dataTransfer) {
-    event.dataTransfer.dropEffect = 'move'
-  }
+    if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = 'move'
+    }
 }
 
 const onDrop = (event: any) => {
-  const operatorName = event.dataTransfer?.getData("operatorName");
-  const operatorLabel = event.dataTransfer?.getData("operatorLabel");
-  const operatorAttributes = event.dataTransfer?.getData("operatorAttributes");
+    const operatorName = event.dataTransfer?.getData("operatorName");
+    const operatorLabel = event.dataTransfer?.getData("operatorLabel");
+    const operatorAttributes = event.dataTransfer?.getData("operatorAttributes");
 
-  const { left, top } = vueFlowRef.value.getBoundingClientRect();
+    const { left, top } = vueFlowRef.value.getBoundingClientRect();
 
-  const position = project({
-    x: event.clientX - left,
-    y: event.clientY - top,
-  })
+    const position = project({
+        x: event.clientX - left,
+        y: event.clientY - top,
+    })
 
-  let jsonOperatorAttributes = JSON.parse(operatorAttributes);
-  let attributes: any = {};
-  for (let key in jsonOperatorAttributes) {
-    let value = "";
-    if (jsonOperatorAttributes[key]["value"]) {
-      value = jsonOperatorAttributes[key]["value"];
-    }
-    attributes[key] = value;
-  }
-
-  const newNode = {
-    id: "dndnode_" +new Date().getTime(),
-    position: position,
-    type: 'toolbar',
-    operatorName: `${operatorName}`,
-    label: `${operatorLabel}`,
-    attributes: attributes,
-    events: {
-      doubleClick: () => {
-        // 이미 속성 수정 팝업이 띄워져 있는 경우
-        if (useAttributes.value) {
-          // 팝업 경고창 띄우기
-          useAttributesAlert.value = true;
-
-          // 3초후 팝업 경고창 닫기
-          setTimeout( () => {
-            useAttributesAlert.value = false;
-          }, 3000);
-          return;
+    let jsonOperatorAttributes = JSON.parse(operatorAttributes);
+    let attributes: any = {};
+    for (let key in jsonOperatorAttributes) {
+        let value = "";
+        if (jsonOperatorAttributes[key]["value"]) {
+            value = jsonOperatorAttributes[key]["value"];
         }
-
-        let saveAttribute: any = {
-          operatorName: operatorName,
-          value: attributes,
-          view: jsonOperatorAttributes
-        }
-        propsOperatorAttributes.value = saveAttribute;
-
-        // 속성 수정 팝업 띄우기
-        useAttributes.value = true;
-      }
+        attributes[key] = value;
     }
-  }
-  addNodes([newNode])
 
-  // align node position after drop, so it's centered to the mouse
-  nextTick(() => {
-    const node:any = findNode(newNode.id)
-    const stop = watch(
-        () => node.dimensions,
-        (dimensions) => {
-          if (dimensions.width > 0 && dimensions.height > 0) {
-            node.position = { x: node.position.x - node.dimensions.width / 2, y: node.position.y - node.dimensions.height / 2 }
-            stop()
-          }
-        },
-        { deep: true, flush: 'post' },
-    )
-  })
+    const newNode = {
+        id: "dndnode_" +new Date().getTime(),
+        position: position,
+        type: 'toolbar',
+        operatorName: `${operatorName}`,
+        label: `${operatorLabel}`,
+        attributes: attributes,
+        events: {
+            doubleClick: () => {
+                // 이미 속성 수정 팝업이 띄워져 있는 경우
+                if (attributeHandler.attributesState()) {
+                    // 팝업 경고창 띄우기
+                    attributeHandler.warningAlertOn()
 
-  allSave();
-}
+                    // 3초후 팝업 경고창 닫기
+                    setTimeout( () => {
+                        attributeHandler.warningAlertOff()
+                    }, 3000);
+                    return;
+                }
 
-/*************************************/
-/********* 오퍼레이터 상세보기 *********/
-/*************************************/
-const useAttributes = ref(false);
-const useAttributesAlert = ref(false);
+                let saveAttribute: any = {
+                    operatorName: operatorName,
+                    value: attributes,
+                    view: jsonOperatorAttributes
+                }
+                workflow.setOperatorDetailInfo(saveAttribute);
 
-const saveBtn = (e: any) => {
-  useAttributes.value = false;
-  allSave();
-}
+                // 속성 수정 팝업 띄우기
+                attributeHandler.attributesOn();
+            }
+        }
+    }
+    addNodes([newNode])
 
-const closeBtn = () => {
-  useAttributes.value = false;
+    // align node position after drop, so it's centered to the mouse
+    nextTick(() => {
+        const node:any = findNode(newNode.id)
+        const stop = watch(
+            () => node.dimensions,
+            (dimensions) => {
+                if (dimensions.width > 0 && dimensions.height > 0) {
+                    node.position = { x: node.position.x - node.dimensions.width / 2, y: node.position.y - node.dimensions.height / 2 }
+                    stop()
+                }
+            },
+            { deep: true, flush: 'post' },
+        )
+    })
+
+    save();
 }
 </script>
 
