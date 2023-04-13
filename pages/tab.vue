@@ -1,8 +1,10 @@
 <template>
   <div>
+      <h1>Tab</h1>
+
       <tabs :columns="new Tab().tabList" @useTab="new Tab().setTabTitle"></tabs>
       <div id="wisenut-tab-contents">
-          <h1>{{ selectTab }}</h1>
+          <h2>{{ selectTab }}</h2>
       </div>
   </div>
 </template>
@@ -30,6 +32,10 @@ class Tab {
 </script>
 
 <style scoped>
+h1 {
+    font-size: 20pt;
+    margin-bottom: 20px;
+}
 #wisenut-tab-contents {
     margin: 20px;
 }
