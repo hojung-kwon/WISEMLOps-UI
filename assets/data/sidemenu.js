@@ -1,10 +1,24 @@
 export const sideMenuData = [
   {
+    id: 'main',
+    icon: 'home' ,
+    title: 'main',
+    path: '/',
+    description: '메인페이지'
+  },
+  {
     id: 'tab',
     icon: 'dashboard' ,
     title: 'tab',
     path: '/tab',
     description: '탭 기능 예시'
+  },
+  {
+    id: 'datatable',
+    icon: 'inbox',
+    title: 'datatable',
+    path: '/datatable',
+    description: '데이터테이블 기능 예시'
   },
   {
     id: 'workflow',
