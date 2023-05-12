@@ -9,7 +9,7 @@
     </va-navbar>
   </div>
   <div class="row">
-    <div class="px-3 flex flex-col md12 xs12 lg12">
+    <div class="px-3 flex flex-col xs12">
       <va-card outlined>
         <va-card-title>{{ pageTitle }}</va-card-title>
         <va-card-content>
@@ -17,7 +17,7 @@
             <div class="flex flex-col md12">
               <h6 class="va-h6 mb-2">기본정보</h6>
             </div>
-            <div class="flex flex-col md8 xs12 lg8">
+            <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
               <va-input
                 label="이름"
                 v-model="formValues.notebookName"
@@ -33,7 +33,7 @@
             <div class="flex flex-col md12">
               <h6 class="va-h6 mb-2">Notebook Image</h6>
             </div>
-            <div class="flex flex-col md8 xs12 lg8">
+            <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
               <va-select
               label="Image" 
                 v-model="formValues.imageName" 
@@ -44,10 +44,10 @@
                 class="selectbox mb-2"
               />
             </div>
-            <div class="flex flex-col md8 xs12 lg8">
+            <div class="flex flex-col  xl8 lg10 md12 sm12 xs12">
               <va-checkbox v-model="formValues.customImageYN" label="CustomImage" class="mb-2"/>
             </div>
-            <div v-if="formValues.customImageYN" class="flex flex-col md8 xs12 lg8">  
+            <div v-if="formValues.customImageYN" class="flex flex-col xl8 lg10 md12 sm12 xs12">  
               <va-input
                 label="Custom Image"
                 v-model="formValues.customImageName"
@@ -71,7 +71,7 @@
             <div class="flex flex-col md12">
               <h6 class="va-h6 mb-2">CPU/GPU</h6>
             </div>
-            <div class="flex flex-col md4 lg4 xs12">
+            <div class="flex flex-col xl4 lg5 md6 sm12 xs12">
               <va-input
                 label="Minimum CPU"
                 v-model="formValues.minCpu"
@@ -89,7 +89,7 @@
                 class="inputbox mb-2 pr-4"
               />
             </div>
-            <div class="flex flex-col md4 lg4 xs12">
+            <div class="flex flex-col xl4 lg5 md6 sm12 xs12">
               <va-input
                 label="Minimum Memory Gi"
                 v-model="formValues.minRam"
@@ -112,7 +112,7 @@
             <div class="flex flex-col md12">
               <h6 class="va-h6 mb-2">GPU</h6>
             </div>
-            <div class="flex flex-col md4 lg4 xs12">
+            <div class="flex flex-col xl4 lg5 md6 sm12 xs12">
               <va-select 
                 label="Number of GPUs"
                 v-model="formValues.numOfGpu" 
@@ -122,7 +122,7 @@
                 class="selectbox mb-2 pr-4"
                 />
             </div>
-            <div class="flex flex-col md4 lg4 xs12">
+            <div class="flex flex-col xl4 lg5 md6 sm12 xs12">
               <va-select 
                 label="GPU Vendor"
                 v-model="formValues.gpuVendor" 
@@ -137,7 +137,7 @@
             <div class="flex flex-col md12">
               <h6 class="va-h6 mb-2">Workspace Volume</h6>
             </div>
-            <div class="flex flex-col md8 lg8 xs12">
+            <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
               <va-input
                 label="Volume name"
                 v-model="formValues.workspaceVolumeName"
@@ -155,10 +155,10 @@
                 class="inputbox mb-2"
               />        
             </div>
-            <div class="flex flex-col md8 xs12 lg8">
+            <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
               <va-checkbox v-model="formValues.defaultStorageClassYN" label="Use default storage class" class="mb-2" readonly/>
             </div>
-            <div v-if="formValues.defaultStorageClassYN" class="flex flex-col md8 xs12 lg8">  
+            <div v-if="formValues.defaultStorageClassYN" class="flex flex-col xl8 lg10 md12 sm12 xs12">  
               <div class="mb-2"><b>Access mode</b></div>
               <va-option-list
                 type="radio"
