@@ -42,6 +42,13 @@ export const sideMenuData = [
     description: 'jobs',
   },
   {
+    id: 'endpoint',
+    icon: 'share',
+    title: 'EndPoint',
+    path: '/endpoint',
+    description: 'endpoint',
+  },
+  {
     id: 'settings',
     icon: 'settings',
     title: 'Settings',
