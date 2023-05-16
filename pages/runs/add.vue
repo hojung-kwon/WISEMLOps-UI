@@ -27,9 +27,10 @@
                   class="inputbox mb-2"
                 >
                   <template #appendInner >
-                    <va-button class="px-4" icon="search"></va-button>
+                    <va-button class="px-4" icon="search" @click="showPopup.pipeline=!showPopup.pipeline"></va-button>
                   </template>
                 </va-input>
+                    <PipelinePopup v-model="showPopup.pipeline"/>
                 <va-input
                   label="Pipeline version"
                   v-model="formValues.pipelineVersion"
@@ -39,9 +40,11 @@
                   class="inputbox mb-2"
                 >
                   <template #appendInner >
-                    <va-button class="px-4" icon="search"></va-button>
+                    <va-button class="px-4" icon="search" @click="showPopup.pipelineVersion=!showPopup.pipelineVersion"></va-button>
                   </template>
                 </va-input>
+                    <PipelineVersionPopup v-model="showPopup.pipelineVersion"/>
+
                 <va-input
                   label="이름"
                   v-model="formValues.pipelineVersion"
@@ -60,9 +63,11 @@
                   class="inputbox mb-2"
                 >
                   <template #appendInner >
-                    <va-button class="px-4" icon="search"></va-button>
+                    <va-button class="px-4" icon="search" @click="showPopup.experiment=!showPopup.experiment"></va-button>
                   </template>
                 </va-input>
+                  <ExperimentPopup v-model="showPopup.experiment"/>
+
               </div>
             </div>
             <div class="row mb-2">
@@ -124,9 +129,23 @@
 
 <script setup lang="ts">
 
+import PipelinePopup from '~~/components/popup/Pipeline.vue';
+import PipelineVersionPopup from '~~/components/popup/PipelineVersion.vue';
+import ExperimentPopup from '~~/components/popup/Experiment.vue';
+
+
+
+
 const router = useRouter();
 const pageTitle = ref('Run 등록')
 
+const showPopup = ref({
+  pipeline: false,
+  pipelineVersion: false,
+  experiment: false
+})
+
+const showPipelinePopup = ref(false)
 
 const formValues = ref({
   pipelineId: '',
