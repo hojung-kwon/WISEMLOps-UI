@@ -49,6 +49,42 @@ export const sideMenuData = [
     description: 'endpoints',
   },
   {
+    id: 'cluster',
+    icon: 'hub',
+    title: 'Cluster',
+    description:'클러스터 관리',
+    subItems: [
+      {
+        id: 'nodes',
+        icon: 'workspaces',
+        title: 'Nodes',
+        path: '/cluster/nodes',
+        description: ''
+      },
+      {
+        id: 'volumes',
+        icon: 'storage',
+        title: 'Volumes',
+        path: '/cluster/volumes',
+        description: ''
+      },
+      {
+        id: 'services',
+        icon: 'widgets',
+        title: 'Services',
+        path: '/cluster/services',
+        description: ''
+      },
+      {
+        id: 'pods',
+        icon: 'view_in_ar',
+        title: 'Pods',
+        path: '/cluster/pods',
+        description: ''
+      }
+    ]
+  }, 
+  {
     id: 'settings',
     icon: 'settings',
     title: 'Settings',
