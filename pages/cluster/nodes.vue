@@ -13,7 +13,7 @@
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
             <va-data-table
-              :items="nodes.result"
+              :items="nodes ? nodes.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
               :columns="columns"
@@ -36,6 +36,18 @@ const config = useAppConfig();
 // import { cluster_nodes } from '~~/assets/data/sample/cluster_nodes';
 const pageTitle = ref('Cluster Nodes')
 
+
+interface Message {
+  code: number;
+  message?: string;
+  result: {
+    name: string;
+    version: string;
+    status: string;
+    create_date: string
+  }[]
+}
+
 // const nodesData = cluster_nodes
 
 const pageSize: number = 10;
@@ -50,7 +62,7 @@ const columns: any[] = [
 ]
 
 
-const { data:nodes } = await useFetch('/cluster/nodes', {
+const { data:nodes, error,  } = await useFetch<Message>('/cluster/nodes', {
   method: 'GET',
   baseURL: config.apiServer,
 })
