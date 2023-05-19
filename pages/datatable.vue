@@ -5,7 +5,7 @@
       <va-data-table :items="datas" :no-data-html="noItemText"
                      :no-data-filtered-html="noItemText"
                      :columns="columns" :per-page="pageSize" :current-page="currentPage"
-                     :filter="filterKeyword" @filtered="filter = $event.items"
+                     :filter="filterKeyword"
                      :loading="loading" sticky-header>
 
           <template #cell(detail)="{ rowIndex, rowData }">

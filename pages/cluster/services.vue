@@ -16,12 +16,26 @@
               :items="services ? services.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="columns"
+              :columns="serviceColums"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 
               sticky-header
             >
+              <template #bodyAppend>
+                <tr>
+                  <td colspan="8">
+                    <div class="page-view">
+                      <va-pagination 
+                        v-model="currentPage" 
+                        :pages="pagenationView(pageSize, services?.result)" 
+                        :visible-pages="5"
+                        gapped
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </template> 
             </va-data-table>
           </va-card-content>
         </va-card>
@@ -31,30 +45,15 @@
 </template>
 
 <script setup lang="ts">
-const config = useAppConfig();
 const { $bus } = useNuxtApp();
-
-// import { cluster_nodes } from '~~/assets/data/sample/cluster_nodes';
 const pageTitle = ref('Services')
 
-
-// const nodesData = cluster_nodes
-
-const pageSize: number = 10;
-const currentPage: number = 1;
-const filterKeyword: string = "";
-const noItemText: string = "No Item";
-const columns: any[] = [
-  { label: '노드명', key: 'name'},
-  { label: '버전', key: 'version'},
-  { label: '상태', key: 'status'},
-  { label: '시작시간', key: 'create_date'},
-]
+const currentPage = ref(1)
+const filterKeyword = ref("")
 
 const services = await getServices(localStorage.getItem('namespace'))
 $bus.$on('namespace', async ( data:string ) => {
   services.value = (await getServices(localStorage.getItem('namespace'))).value
 })
-
 
 </script>

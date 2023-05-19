@@ -16,12 +16,26 @@
               :items="pods ? pods.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="columns"
+              :columns="podColums"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 
               sticky-header
             >
+              <template #bodyAppend>
+                <tr>
+                  <td colspan="8">
+                    <div class="page-view">
+                      <va-pagination 
+                        v-model="currentPage" 
+                        :pages="pagenationView(pageSize, pods?.result)" 
+                        :visible-pages="5"
+                        gapped
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </template> 
             </va-data-table>
           </va-card-content>
         </va-card>
@@ -31,28 +45,14 @@
 </template>
 
 <script setup lang="ts">
-import { getPods } from '~~/composables/cluster';
-
 const { $bus } = useNuxtApp();
-
-const config = useAppConfig();
 
 const pageTitle = ref('Pods')
 
-const pageSize: number = 10;
-const currentPage: number = 1;
-const filterKeyword: string = "";
-const noItemText: string = "No Item";
-const columns: any[] = [
-  { label: '노드명', key: 'name'},
-  { label: 'Ready', key: 'ready'},
-  { label: '상태', key: 'status'},
-  { label: 'Restarts', key: 'restarts'},
-  { label: '시작시간', key: 'create_date'},
-]
+const currentPage = ref(1)
+const filterKeyword = ref("")
 
 const pods = await getPods(localStorage.getItem('namespace'))
-
 $bus.$on('namespace', async ( data:string ) =>  {
   pods.value = (await getPods(localStorage.getItem('namespace'))).value
 })

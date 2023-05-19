@@ -19,7 +19,7 @@
               :items="pipelineData"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="columns"
+              :columns="pipelineColums"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 
@@ -36,8 +36,19 @@
               </div>
             </template>
             <template #bodyAppend>
-              FOOTER
-            </template>
+                <tr>
+                  <td colspan="8">
+                    <div class="page-view">
+                      <va-pagination 
+                        v-model="currentPage" 
+                        :pages="pagenationView(pageSize, pipelines)" 
+                        :visible-pages="5"
+                        gapped
+                      />
+                    </div>
+                  </td>
+                </tr>
+              </template> 
             </va-data-table>
           </va-card-content>
           <va-card-actions align="between">
@@ -60,21 +71,9 @@
   const pageTitle = ref('Pipelines')
   const pipelineData = pipelines;
   
-  
-  const pageSize: number = 10;
-  const currentPage: number = 1;
-  const filterKeyword: string = "";
-  const noItemText: string = "No Item";
-  
-  // pipline을 예제로한 임시코드
-  const columns = [
-    { label: '이름', key: 'name' },
-    { label: '설명', key: 'description' },
-    { label: '최종 갱신', key: 'created_at' },
-    { label: '작업', key: 'job' },
-  ]
-  
-    
+  const currentPage = ref(1)
+  const filterKeyword = ref('')
+   
   </script>
   
   <style>
