@@ -62,10 +62,10 @@ export const sideMenuData = [
         description: ''
       },
       {
-        id: 'volumes',
-        icon: 'storage',
-        title: 'Volumes',
-        path: '/cluster/volumes',
+        id: 'pods',
+        icon: 'view_in_ar',
+        title: 'Pods',
+        path: '/cluster/pods',
         description: ''
       },
       {
@@ -76,10 +76,10 @@ export const sideMenuData = [
         description: ''
       },
       {
-        id: 'pods',
-        icon: 'view_in_ar',
-        title: 'Pods',
-        path: '/cluster/pods',
+        id: 'volumes',
+        icon: 'storage',
+        title: 'Volumes',
+        path: '/cluster/volumes',
         description: ''
       }
     ]

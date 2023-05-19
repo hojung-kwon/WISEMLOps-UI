@@ -33,7 +33,11 @@
 <script setup lang="ts">
 const config = useAppConfig();
 
-const pageTitle = ref('Cluster Nodes')
+// import { cluster_nodes } from '~~/assets/data/sample/cluster_nodes';
+const pageTitle = ref('Services')
+
+
+// const nodesData = cluster_nodes
 
 const pageSize: number = 10;
 const currentPage: number = 1;

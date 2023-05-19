@@ -33,7 +33,7 @@
 <script setup lang="ts">
 const config = useAppConfig();
 
-const pageTitle = ref('Cluster Nodes')
+const pageTitle = ref('Pods')
 
 const pageSize: number = 10;
 const currentPage: number = 1;
