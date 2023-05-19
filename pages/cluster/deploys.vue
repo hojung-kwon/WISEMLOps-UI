@@ -22,6 +22,12 @@
               :filter="filterKeyword" 
               sticky-header
             >
+              <template #cell(create_date)="{ rowIndex, rowData }">
+                <div>
+                  {{ new Date(rowData.create_date).toLocaleString() }}
+                </div>
+              </template>
+
               <template #bodyAppend>
                 <tr>
                   <td colspan="8">
@@ -47,7 +53,7 @@
 <script setup lang="ts">
 const { $bus } = useNuxtApp();
 
-const pageTitle = ref('Pods')
+const pageTitle = ref('Deployments')
 
 const currentPage = ref(1)
 const filterKeyword = ref("")

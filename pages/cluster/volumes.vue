@@ -22,6 +22,11 @@
               :filter="filterKeyword" 
               sticky-header
             >
+              <template #cell(create_date)="{ rowIndex, rowData }">
+                <div>
+                  {{ new Date(rowData.create_date).toLocaleString() }}
+                </div>
+              </template>
               <template #bodyAppend>
                 <tr>
                   <td colspan="8">
