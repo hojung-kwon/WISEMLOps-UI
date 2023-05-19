@@ -14,5 +14,6 @@ export const hasNamespace = [
   '/runs',
   '/jobs',
   '/cluster/services',
-  '/cluster/pods'
+  '/cluster/pods',
+  '/cluster/deploys'
 ]

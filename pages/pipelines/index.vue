@@ -19,7 +19,7 @@
               :items="pipelineData"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="pipelineColums"
+              :columns="pipelineColumns"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 

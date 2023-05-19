@@ -13,10 +13,10 @@
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
             <va-data-table
-              :items="volumes ? volumes.result : []"
+              :items="deploys ? deploys.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="volumeColumns"
+              :columns="deployColumns"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 
@@ -28,7 +28,7 @@
                     <div class="page-view">
                       <va-pagination 
                         v-model="currentPage" 
-                        :pages="pagenationView(pageSize, volumes?.result)" 
+                        :pages="pagenationView(pageSize, deploys?.result)" 
                         :visible-pages="5"
                         gapped
                       />
@@ -45,11 +45,16 @@
 </template>
 
 <script setup lang="ts">
+const { $bus } = useNuxtApp();
 
-const pageTitle = ref('Cluster Volumes')
+const pageTitle = ref('Pods')
 
 const currentPage = ref(1)
 const filterKeyword = ref("")
-const volumes = await getVolumes()
+
+const deploys = await getDeploys(localStorage.getItem('namespace'))
+$bus.$on('namespace', async ( data:string ) =>  {
+  deploys.value = (await getDeploys(localStorage.getItem('namespace'))).value
+})
 
 </script>

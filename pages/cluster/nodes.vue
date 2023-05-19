@@ -16,7 +16,7 @@
               :items="nodes ? nodes.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="nodeColums"
+              :columns="nodeColumns"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 

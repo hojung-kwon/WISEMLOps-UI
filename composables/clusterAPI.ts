@@ -30,12 +30,21 @@ export const getVolumes = async () => {
 }
 
 /* GET /cluster/namespaces/{namespaces}/pods */
-export const getPods = async ( namespace:string | null)=> {
-  const { data:pods  } = await useFetch<ResponseBody>(`/cluster/namespaces/${namespace}/pods`, {
+export const getPods = async ( namespace:string | null) => {
+  const { data:pods } = await useFetch<ResponseBody>(`/cluster/namespaces/${namespace}/pods`, {
     method: 'GET',
     baseURL: config.apiServer,
   })
   return pods;
+}
+
+/* GET /cluster/namespaces/{namespaces}/deploys */
+export const getDeploys = async ( namespace:string | null) => {
+  const { data:deploys } = await useFetch<ResponseBody>(`/cluster/namespaces/${namespace}/deployments`, {
+    method: 'GET',
+    baseURL: config.apiServer,
+  })
+  return deploys;
 }
 
 /* GET /cluster/namespaces/{namespaces}/services */

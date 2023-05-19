@@ -69,6 +69,13 @@ export const sideMenuData = [
         description: ''
       },
       {
+        id: 'deploys',
+        icon: 'downloading',
+        title: 'Deploys',
+        path: '/cluster/deploys',
+        description: ''
+      },
+      {
         id: 'services',
         icon: 'widgets',
         title: 'Services',

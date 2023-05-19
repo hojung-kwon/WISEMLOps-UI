@@ -16,7 +16,7 @@
               :items="pods ? pods.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="podColums"
+              :columns="podColumns"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 

@@ -16,7 +16,7 @@
               :items="services ? services.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="serviceColums"
+              :columns="serviceColumns"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 

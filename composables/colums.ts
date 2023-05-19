@@ -1,6 +1,6 @@
 
 /* /pipelines */
-export const pipelineColums = ref([
+export const pipelineColumns = ref([
   { label: '이름', key: 'name' },
   { label: '설명', key: 'description' },
   { label: '최종 갱신', key: 'created_at' },
@@ -8,7 +8,7 @@ export const pipelineColums = ref([
 ])
 
 /* /cluster/nodes */
-export const nodeColums = ref([
+export const nodeColumns = ref([
   { label: 'NODE명', key: 'name'},
   { label: '버전', key: 'version'},
   { label: '상태', key: 'status'},
@@ -16,7 +16,7 @@ export const nodeColums = ref([
 ])
 
 /* /cluster/pods */
-export const podColums  = ref([
+export const podColumns  = ref([
   { label: 'POD명', key: 'name'},
   { label: 'Ready', key: 'ready'},
   { label: '상태', key: 'status'},
@@ -24,8 +24,19 @@ export const podColums  = ref([
   { label: '시작시간', key: 'create_date'},
 ])
 
+
+/* /cluster/deploys */
+export const deployColumns  = ref([
+  { label: 'POD명', key: 'name'},
+  { label: 'Ready', key: 'ready'},
+  { label: 'Up-To-Date', key: 'up_to_date'},
+  { label: 'Available', key: 'available'},
+  { label: '시작시간', key: 'create_date'},
+])
+
+
 /* /cluster/services */
-export const serviceColums = ref([
+export const serviceColumns = ref([
   { label: 'SERVICE명', key: 'name'},
   { label: '타입', key: 'type'},
   { label: 'Cluster IP', key: 'cluster_ip'},
@@ -35,7 +46,7 @@ export const serviceColums = ref([
 ])
 
 /* /cluster/volumes */
-export const volumeColums = ref([
+export const volumeColumns = ref([
   { label: 'Volume명', key: 'name'},
   { label: '용량', key: 'capacity'},
   { label: '상태', key: 'status'},
