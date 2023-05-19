@@ -1,5 +1,16 @@
 const config = useAppConfig();
 
+
+/* GET /cluster/namepaces */
+
+export const getNamespaces = async() => {
+  const { data:namespaces } = await useFetch<ResponseBody>(`/cluster/namespaces`, {
+    method: 'GET',
+    baseURL: config.apiServer
+  })
+  return namespaces;
+}
+
 /* GET /cluster/nodes */
 export const getNodes = async () => {
   const { data:nodes } = await useFetch<ResponseBody>(`/cluster/nodes`, {

@@ -52,6 +52,4 @@ const currentPage = ref(1)
 const filterKeyword = ref("")
 const nodes = await getNodes();
 
-
-
 </script>

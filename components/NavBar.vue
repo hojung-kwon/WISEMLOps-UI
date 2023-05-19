@@ -1,7 +1,11 @@
 <template>
   <va-navbar color="primary" class="main-nav py-0 px-2" >
     <template #left>
-      <NameSpaces v-model:namespaces="namespaceOption" v-model:namespace="namespace" @selectNamespace="selectNamespace" />
+      <NameSpaces 
+        v-if="hasNamespace.indexOf(route.path) > 0"
+        v-model:namespaces="namespaceOption" 
+        v-model:namespace="namespace" 
+        @selectNamespace="selectNamespace" />
     </template>
     <template #default>
       <div></div>
@@ -43,6 +47,7 @@
 
 <script setup lang="ts">
 const config = useAppConfig();
+const route = useRoute();
 
 interface Props {
   userName?: string;
@@ -54,11 +59,7 @@ const props = withDefaults(defineProps<Props>(), {
   userName: 'User Name'
 })
 
-const { data:namespaces } = await useFetch<ResponseBody>('/cluster/namespaces', {
-  method: 'GET',
-  baseURL: config.apiServer
-})
-
+const namespaces = await getNamespaces();
 
 const namespaceOption = ref(namespaces.value?.result)
 

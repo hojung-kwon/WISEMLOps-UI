@@ -9,7 +9,7 @@ export const pipelineColums = ref([
 
 /* /cluster/nodes */
 export const nodeColums = ref([
-  { label: '노드명', key: 'name'},
+  { label: 'NODE명', key: 'name'},
   { label: '버전', key: 'version'},
   { label: '상태', key: 'status'},
   { label: '시작시간', key: 'create_date'},  
@@ -17,7 +17,7 @@ export const nodeColums = ref([
 
 /* /cluster/pods */
 export const podColums  = ref([
-  { label: '노드명', key: 'name'},
+  { label: 'POD명', key: 'name'},
   { label: 'Ready', key: 'ready'},
   { label: '상태', key: 'status'},
   { label: 'Restarts', key: 'restarts'},
@@ -26,9 +26,11 @@ export const podColums  = ref([
 
 /* /cluster/services */
 export const serviceColums = ref([
-  { label: '노드명', key: 'name'},
-  { label: '버전', key: 'version'},
-  { label: '상태', key: 'status'},
+  { label: 'SERVICE명', key: 'name'},
+  { label: '타입', key: 'type'},
+  { label: 'Cluster IP', key: 'cluster_ip'},
+  { label: 'External IP', key: 'external_ip'},
+  { label: 'Ports', key: 'ports'},
   { label: '시작시간', key: 'create_date'},
 ])
 
