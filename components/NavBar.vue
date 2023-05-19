@@ -49,22 +49,12 @@ interface Props {
   userId: string;
 }
 
-interface Message {
-  code: number;
-  message?: string;
-  result: {
-    name: string;
-    version: string;
-    status: string;
-    create_date: string
-  }[]
-}
 
 const props = withDefaults(defineProps<Props>(), {
   userName: 'User Name'
 })
 
-const { data:namespaces } = await useFetch<Message>('/cluster/namespaces', {
+const { data:namespaces } = await useFetch<ResponseBody>('/cluster/namespaces', {
   method: 'GET',
   baseURL: config.apiServer
 })
@@ -76,6 +66,7 @@ const namespace = ref(!localStorage.getItem('namespace')?localStorage.setItem('n
 
 const selectNamespace = (e:any) => {
   localStorage.setItem('namespace', e)  
+  
 }
 
 const accountSetting = () => {

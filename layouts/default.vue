@@ -19,6 +19,7 @@
 <script setup lang="ts">
 
 import { sideMenuData } from '~~/assets/data/sidemenu';
+const config = useAppConfig();
 const sideMenu = ref(sideMenuData);
 
 const userId = ref('admin');
@@ -28,6 +29,22 @@ const userName = ref('관리자');
 useHead({
   title: '기본페이지'
 })
+
+
+const { data:namespaces } = await useFetch<ResponseBody>('/cluster/namespaces', {
+  method: 'GET',
+  baseURL: config.apiServer
+})
+
+
+const namespaceOption = ref(namespaces.value?.result)
+
+const namespace = ref(!localStorage.getItem('namespace')?localStorage.setItem('namespace', 'default'): localStorage.getItem('namespace'))
+
+const selectNamespace = (e:any) => {
+  localStorage.setItem('namespace', e)  
+}
+
 </script>
 
 <style scoped>

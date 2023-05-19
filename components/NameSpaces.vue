@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-
+const { $bus } = useNuxtApp();
 interface Props {
   namespaces: [];
   namespace: string;
@@ -24,6 +24,7 @@ const selectedNamespace = ref(props.namespace)
 
 const selectNamespace = (e:any) => {
   emit('selectNamespace', e)
+  $bus.$emit("namespace", e)
 }
 
 </script>

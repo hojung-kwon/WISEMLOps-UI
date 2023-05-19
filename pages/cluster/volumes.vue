@@ -66,16 +66,7 @@ const columns: any[] = [
   { label: '생성일시', key: 'create_date'},
 ]
 
-
-
-const { data:volumes, error,  } = await useFetch<ResponseBody>('/cluster/volumes', {
-  method: 'GET',
-  baseURL: config.apiServer,
-})
-
-const test = () => {
-  console.log(currentPage)
-}
+const volumes = await getVolumes()
 
 const pageView = () => {
     return pageSize && pageSize !== 0 ? Math.ceil(volumes.value?.result.length / pageSize) : volumes.value?.result.length;

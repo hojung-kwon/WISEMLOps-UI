@@ -13,7 +13,7 @@
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
             <va-data-table
-              :items="nodes ? nodes.result : []"
+              :items="pods ? pods.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
               :columns="columns"
@@ -31,6 +31,10 @@
 </template>
 
 <script setup lang="ts">
+import { getPods } from '~~/composables/cluster';
+
+const { $bus } = useNuxtApp();
+
 const config = useAppConfig();
 
 const pageTitle = ref('Pods')
@@ -41,15 +45,16 @@ const filterKeyword: string = "";
 const noItemText: string = "No Item";
 const columns: any[] = [
   { label: '노드명', key: 'name'},
-  { label: '버전', key: 'version'},
+  { label: 'Ready', key: 'ready'},
   { label: '상태', key: 'status'},
+  { label: 'Restarts', key: 'restarts'},
   { label: '시작시간', key: 'create_date'},
 ]
 
+const pods = await getPods(localStorage.getItem('namespace'))
 
-const { data:nodes, error,  } = await useFetch<ResponseBody>('/cluster/nodes', {
-  method: 'GET',
-  baseURL: config.apiServer,
+$bus.$on('namespace', async ( data:string ) =>  {
+  pods.value = (await getPods(localStorage.getItem('namespace'))).value
 })
 
 </script>

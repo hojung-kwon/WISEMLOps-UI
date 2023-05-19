@@ -13,7 +13,7 @@
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
             <va-data-table
-              :items="nodes ? nodes.result : []"
+              :items="services ? services.result : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
               :columns="columns"
@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 const config = useAppConfig();
+const { $bus } = useNuxtApp();
 
 // import { cluster_nodes } from '~~/assets/data/sample/cluster_nodes';
 const pageTitle = ref('Services')
@@ -50,10 +51,10 @@ const columns: any[] = [
   { label: '시작시간', key: 'create_date'},
 ]
 
-
-const { data:nodes, error,  } = await useFetch<ResponseBody>('/cluster/nodes', {
-  method: 'GET',
-  baseURL: config.apiServer,
+const services = await getServices(localStorage.getItem('namespace'))
+$bus.$on('namespace', async ( data:string ) => {
+  services.value = (await getServices(localStorage.getItem('namespace'))).value
 })
+
 
 </script>

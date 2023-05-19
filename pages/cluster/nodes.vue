@@ -33,6 +33,8 @@
 <script setup lang="ts">
 const config = useAppConfig();
 
+const nodes = await getNodes();
+
 const pageTitle = ref('Cluster Nodes')
 
 const pageSize: number = 10;
@@ -47,9 +49,5 @@ const columns: any[] = [
 ]
 
 
-const { data:nodes, error,  } = await useFetch<ResponseBody>('/cluster/nodes', {
-  method: 'GET',
-  baseURL: config.apiServer,
-})
 
 </script>
