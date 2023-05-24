@@ -6,6 +6,9 @@
         v-model:namespaces="namespaceOption" 
         v-model:namespace="namespace" 
         @selectNamespace="selectNamespace" />
+      <div v-else class="px-3">
+        {{ namespace }}
+      </div>
     </template>
     <template #default>
       <div></div>

@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     head: {
       charset:'utf-8',
       viewport: 'initial-scale=1',
-      title: '[와이즈넛] 관리도구 샘플 화면 프로젝트',
+      title: 'MLOps Platform',
       meta:[ 
         { name: 'description', content: 'sample description'}
       ]

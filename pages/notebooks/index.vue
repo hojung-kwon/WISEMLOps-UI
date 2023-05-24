@@ -25,9 +25,9 @@
               :filter="filterKeyword" 
               sticky-header
           >
-          <template #cell(create_date)="{ rowIndex, rowData }">
+          <template #cell(created_at)="{ rowIndex, rowData }">
             <div>
-              {{ new Date(rowData.create_date).toLocaleString() }}
+              {{ new Date(rowData.created_at).toLocaleString() }}
             </div>
           </template>
           <template #cell(details)="{ rowIndex, rowData }">

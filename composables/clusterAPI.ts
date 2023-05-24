@@ -20,7 +20,7 @@ export const getNotebooks = async ( namespace:string | null ) => {
   return notetbooks;
 }
 
-export const getNotebookDetails = async ( namespace:string | null, name:string | string[] ) => {
+export const getNotebookDetails = async ( namespace:string | null, name:string | string[]) => {
   const { data:notebookDetails } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks/${name}`, {
     method: 'GET',
     baseURL: config.apiServer

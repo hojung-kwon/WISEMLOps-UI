@@ -21,10 +21,10 @@ export const notebookColums = ref([
 ])
 
 export const notebookDetailTabs = ref([
-  { id: 'overview', title: 'Overview' },
-  { id: 'logs', title: 'Logs' },
-  { id: 'event', title: 'Event' },
-  { id: 'yaml', title: 'Yaml' },
+  { id: 'overview', icon: 'visibility', title: 'Overview' },
+  { id: 'logs', icon: 'article', title: 'Logs' },
+  { id: 'event', icon: 'calendar_today', title: 'Event' },
+  { id: 'yaml', icon: 'code', title: 'Yaml' },
 ])
 
 

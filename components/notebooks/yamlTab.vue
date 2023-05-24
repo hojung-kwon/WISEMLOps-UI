@@ -7,7 +7,7 @@
             v-model="yamlString" 
             lang="yaml" 
             theme="vs-dark"
-            :options="{ readOnly: true, minimap: { enabled:false }, theme: 'vs-dark' }"
+            :options="{ readOnly: true, minimap: { enabled:false }  }"
             style="height:500px"
           />
         </va-card-content>

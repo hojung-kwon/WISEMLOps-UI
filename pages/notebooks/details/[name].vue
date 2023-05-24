@@ -13,13 +13,14 @@
   </div>
   <div class="row">
     <div class="px-3 flex flex-col xs12">
-      <h5 class="px-3 va-h5">{{ notebookName }}</h5>
+      <h5 class="px-4 va-h5">{{ notebookName }}</h5>
     </div>
   </div>
   <div class="row">
     <div class="px-3 mt-3 flex flex-col xs12">
       <va-tabs
         v-model="curTab"
+        class="px-3"
       >
         <template #tabs>
           <va-tab
@@ -77,7 +78,6 @@ const curTab = ref('overview')
 
 const selectTab = () => {
   yaml.value= details.value?.result[0]['yaml'];
-  console.log(yaml)
 }
 
 </script>
