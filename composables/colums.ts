@@ -17,7 +17,14 @@ export const notebookColums = ref([
   { label: 'MEMORY', key: 'memory'},
   { label: '상태', key: 'status'},
   { label: '생성일시', key: 'created_at'},
-  { label: '보기', key: 'view'},
+  { label: '상세보기', key: 'details'},
+])
+
+export const notebookDetailTabs = ref([
+  { id: 'overview', title: 'Overview' },
+  { id: 'logs', title: 'Logs' },
+  { id: 'event', title: 'Event' },
+  { id: 'yaml', title: 'Yaml' },
 ])
 
 

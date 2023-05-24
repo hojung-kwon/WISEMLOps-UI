@@ -13,13 +13,38 @@ export const getNamespaces = async() => {
 
 /* GET /crds/namespaces/{namespace}/notebooks */
 export const getNotebooks = async ( namespace:string | null ) => {
-  const { data:volumes } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, {
+  const { data:notetbooks } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, {
     method: 'GET',
     baseURL: config.apiServer,
   }) 
-  return volumes;
+  return notetbooks;
 }
 
+export const getNotebookDetails = async ( namespace:string | null, name:string | string[] ) => {
+  const { data:notebookDetails } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks/${name}`, {
+    method: 'GET',
+    baseURL: config.apiServer
+  })
+  return notebookDetails;
+}
+
+
+/* GET /mlflow/experiment */
+export const getExperiments = async ( namespace:string | null ) => {
+  
+  const query = {
+    max_result: 1000,
+    filter_string: '',
+    order_by: '',
+    page_token: ''
+  }
+
+  const { data:experiments } = await useFetch<ResponseBody>(`/mlflow/experiment`, {
+    method: 'GET',
+    baseURL: config.apiServer,
+  }) 
+  return experiments;
+}
 
 /* GET /cluster/nodes */
 export const getNodes = async () => {

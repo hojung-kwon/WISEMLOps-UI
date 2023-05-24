@@ -16,7 +16,7 @@
         <va-card-title>{{ pageTitle }}</va-card-title>
         <va-card-content>
           <va-data-table
-          :items="notebooks ? notebooks.result : []"
+          :items="notebooks ? notebooks.result: []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
               :columns="notebookColums"
@@ -30,9 +30,9 @@
               {{ new Date(rowData.create_date).toLocaleString() }}
             </div>
           </template>
-          <template #cell(view)="{ rowIndex, rowData }">
+          <template #cell(details)="{ rowIndex, rowData }">
             <div>
-              <va-button size="small">보기</va-button>
+              <va-button size="small" @click="details(rowData.name)">상세보기</va-button>
             </div>
           </template>
           <template #bodyAppend>
@@ -61,6 +61,7 @@
 import { notebooksToolButton } from '~~/assets/data/ToolButton/notebooks'
 
 const { $bus } = useNuxtApp();
+const router = useRouter();
 
 const pageTitle = ref('Notebooks')
 
@@ -69,10 +70,13 @@ const currentPage = ref(1)
 const filterKeyword = ref("")
 
 
+const details = (notebookName:string) => {
+    router.push({
+      path: `/notebooks/details/${notebookName}`,
+    })
+}
+
 const notebooks = await getNotebooks(localStorage.getItem('namespace'))
-
-console.log(notebooks? notebooks.value?.result: [])
-
 $bus.$on('namespace', async ( data:string ) =>  {
   notebooks.value = (await getNotebooks(localStorage.getItem('namespace'))).value
 })

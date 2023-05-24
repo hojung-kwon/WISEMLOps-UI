@@ -34,4 +34,4 @@ const selectNamespace = (e:any) => {
   color: #000
 }
 
-</style>`1`
+</style>

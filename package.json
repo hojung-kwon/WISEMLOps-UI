@@ -8,7 +8,9 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "3.2.2"
+    "monaco-editor": "^0.38.0",
+    "nuxt": "3.2.2",
+    "nuxt-monaco-editor": "^1.2.2"
   },
   "dependencies": {
     "@mdi/font": "7.1.96",

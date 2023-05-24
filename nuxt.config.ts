@@ -15,11 +15,22 @@ export default defineNuxtConfig({
       mode: 'out-in'
     }
   },
-  modules: ['@vuestic/nuxt'],
+  modules: [
+    '@vuestic/nuxt',
+    'nuxt-monaco-editor'
+  ],
   vuestic: {
     config: {
 
     },
     css: ['typography', 'reset']
+  },
+  monacoEditor: {
+    dest: '_monaco',
+    locale: 'ko',
+    componentName: {
+      codeEditor: 'MonacoEditor',
+      diffEditor: 'MonacoDiffEditor'
+    }
   }
 })
