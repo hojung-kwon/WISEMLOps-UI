@@ -11,6 +11,16 @@ export const getNamespaces = async() => {
   return namespaces;
 }
 
+/* GET /crds/namespaces/{namespace}/notebooks */
+export const getNotebooks = async ( namespace:string | null ) => {
+  const { data:volumes } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, {
+    method: 'GET',
+    baseURL: config.apiServer,
+  }) 
+  return volumes;
+}
+
+
 /* GET /cluster/nodes */
 export const getNodes = async () => {
   const { data:nodes } = await useFetch<ResponseBody>(`/cluster/nodes`, {

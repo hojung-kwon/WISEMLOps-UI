@@ -16,34 +16,41 @@
         <va-card-title>{{ pageTitle }}</va-card-title>
         <va-card-content>
           <va-data-table
-            :items="pipelineData"
-            :no-data-html="noItemText"
-            :no-data-filtered-html="noItemText"
-            :columns="columns"
-            :per-page="pageSize"
-            :current-page="currentPage"
-            :filter="filterKeyword" 
-            sticky-header
+          :items="notebooks ? notebooks.result : []"
+              :no-data-html="noItemText"
+              :no-data-filtered-html="noItemText"
+              :columns="notebookColums"
+              :per-page="pageSize"
+              :current-page="currentPage"
+              :filter="filterKeyword" 
+              sticky-header
           >
-          <template #cell(description)="{ rowIndex, rowData }">
-            <div class="table-cell" :title="rowData.description">
-            {{ rowData.description }}
+          <template #cell(create_date)="{ rowIndex, rowData }">
+            <div>
+              {{ new Date(rowData.create_date).toLocaleString() }}
             </div>
           </template>
-          <template #cell(job)="{ rowIndex, rowData }">
+          <template #cell(view)="{ rowIndex, rowData }">
             <div>
-              <va-button size="small" class="px-2">확인</va-button>
+              <va-button size="small">보기</va-button>
             </div>
           </template>
           <template #bodyAppend>
-            FOOTER
-          </template>
+            <tr>
+              <td colspan="8">
+                <div class="page-view">
+                  <va-pagination 
+                    v-model="currentPage" 
+                    :pages="pagenationView(pageSize, notebooks?.result)" 
+                    :visible-pages="5"
+                    gapped
+                  />
+                </div>
+              </td>
+            </tr>
+          </template> 
           </va-data-table>
         </va-card-content>
-        <va-card-actions align="between">
-          <div>여기에 action</div>
-          <div>여기에 action</div>
-        </va-card-actions>
       </va-card>
     </div>
   </div>
@@ -52,29 +59,23 @@
 
 <script setup lang="ts">
 import { notebooksToolButton } from '~~/assets/data/ToolButton/notebooks'
-// 임시 코드
-import { pipelines } from '~~/assets/data/sample/pipelines';
 
+const { $bus } = useNuxtApp();
+
+const pageTitle = ref('Notebooks')
 
 const toolButtons = ref(notebooksToolButton);
-const pageTitle = ref('Notebooks')
-const pipelineData = pipelines;
+const currentPage = ref(1)
+const filterKeyword = ref("")
 
 
-const pageSize: number = 10;
-const currentPage: number = 1;
-const filterKeyword: string = "";
-const noItemText: string = "No Item";
+const notebooks = await getNotebooks(localStorage.getItem('namespace'))
 
-// pipline을 예제로한 임시코드
-const columns = [
-  { label: '이름', key: 'name' },
-  { label: '설명', key: 'description' },
-  { label: '최종 갱신', key: 'created_at' },
-  { label: '작업', key: 'job' },
-]
+console.log(notebooks? notebooks.value?.result: [])
 
-
+$bus.$on('namespace', async ( data:string ) =>  {
+  notebooks.value = (await getNotebooks(localStorage.getItem('namespace'))).value
+})
 
 </script>
 

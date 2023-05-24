@@ -2,7 +2,7 @@
   <va-navbar color="primary" class="main-nav py-0 px-2" >
     <template #left>
       <NameSpaces 
-        v-if="hasNamespace.indexOf(route.path) > 0"
+        v-if="hasNamespace.indexOf(route.path) > -1"
         v-model:namespaces="namespaceOption" 
         v-model:namespace="namespace" 
         @selectNamespace="selectNamespace" />
@@ -48,7 +48,6 @@
 <script setup lang="ts">
 const config = useAppConfig();
 const route = useRoute();
-
 interface Props {
   userName?: string;
   userId: string;

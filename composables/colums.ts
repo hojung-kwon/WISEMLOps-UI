@@ -7,6 +7,20 @@ export const pipelineColumns = ref([
   { label: '작업', key: 'job' },
 ])
 
+
+/* /crds/namespaces/{namespace}/notebooks */
+export const notebookColums = ref([
+  { label: '이름', key: 'name'},
+  { label: '이미지', key: 'image'},
+  { label: 'CPU', key: 'cpus'},
+  { label: 'GPU', key: 'gpus'},
+  { label: 'MEMORY', key: 'memory'},
+  { label: '상태', key: 'status'},
+  { label: '생성일시', key: 'created_at'},
+  { label: '보기', key: 'view'},
+])
+
+
 /* /cluster/nodes */
 export const nodeColumns = ref([
   { label: 'NODE명', key: 'name'},
