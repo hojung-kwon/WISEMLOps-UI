@@ -18,6 +18,7 @@ export const notebookColums = ref([
   { label: '상태', key: 'status'},
   { label: '생성일시', key: 'created_at'},
   { label: '상세보기', key: 'details'},
+  { label: 'Connect', key: 'connect'},
 ])
 
 export const notebookDetailTabs = ref([

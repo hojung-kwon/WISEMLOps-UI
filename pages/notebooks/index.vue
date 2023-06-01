@@ -25,6 +25,11 @@
               :filter="filterKeyword" 
               sticky-header
           >
+          <template #cell(status)="{ rowIndex, rowData }">
+            <div v-if="rowData.status.hasOwnProperty('running')">
+              Running
+            </div>
+          </template>
           <template #cell(created_at)="{ rowIndex, rowData }">
             <div>
               {{ new Date(rowData.created_at).toLocaleString() }}
@@ -33,6 +38,14 @@
           <template #cell(details)="{ rowIndex, rowData }">
             <div>
               <va-button size="small" @click="details(rowData.name)">상세보기</va-button>
+            </div>
+          </template>
+          <template #cell(connect)="{ rowIndex, rowData }">
+            <div>
+              <a v-if="rowData.status.hasOwnProperty('running')" :href="rowData.connect" target="_blank">
+                <va-button  size="small">Connect</va-button>
+              </a>
+              <va-button v-else size="small" disabled>Connect</va-button>
             </div>
           </template>
           <template #bodyAppend>

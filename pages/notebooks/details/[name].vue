@@ -77,7 +77,7 @@ const curTab = ref('overview')
 
 
 const selectTab = () => {
-  yaml.value= details.value?.result[0]['yaml'];
+  yaml.value= details.value?.result['yaml'];
 }
 
 </script>

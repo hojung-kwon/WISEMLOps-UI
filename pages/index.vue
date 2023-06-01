@@ -18,6 +18,7 @@
             <li>2023.05.15 - Experiments, Pipeliens, Runs 목록화면 및 등록화면(팝업 제외)</li>
             <li>2023.05.16 - Runs 등록화면 팝업</li>
             <li>2023.05.17 - K8S Node목록 화면</li>
+            <li>2023.06.01 - Notebook connect 붙임</li>
           </va-card-content>
         </va-card>
       </div>
