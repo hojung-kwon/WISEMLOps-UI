@@ -189,21 +189,61 @@
 
 
 <script setup lang="ts">
-
 const router = useRouter();
 const pageTitle = ref('Notebook 등록')
 
+
+const notebookBody = ref({
+  metadata: {
+    name: "aaa",
+    labels: {},
+    annotations: {},
+    create_date: "2023-06-02T00:00:03.064Z"
+  },
+  template_pod: {
+    metadata: {
+      name: "aaa",
+      labels: {},
+      annotations: {},
+      create_date: "2023-06-02T00:00:03.064Z"
+    },
+    containers: [
+      {
+        name: "string",
+        image: "nginx",
+        image_pull_policy: "IfNotPresent",
+        env: {},
+        args: [],
+        command: [],
+        volume_mounts: [],
+        cpu: "0.5",
+        memory: "1Gi",
+        gpu: "0"
+      }
+    ],
+    image_pull_secrets: [
+      "string"
+    ],
+    volumes: [],
+    service_account_name: "default"
+  }
+})
+
+
 const formValues = ref({
   notebookName: '',
-  imageName: '',
+  imageName: {
+    text: '',
+    value: '',
+  },
   customImageYN: false,
   customImageName: '',
-  imagePullPolicy: '',
-  minCpu: 1,
-  minRam: 1,
-  maxCpu: 1.2,
-  maxRam: 1.2,
-  numOfGpu: '',
+  imagePullPolicy: 'IfNotPresent',
+  minCpu: '1',
+  minRam: '1',
+  maxCpu: '1.2',
+  maxRam: '1.2',
+  numOfGpu: '0',
   gpuVendor: '',
   defaultStorageClassYN: true,
   workspaceVolumeName: '',
@@ -255,7 +295,33 @@ const pageBack = () => {
 }
 
 const startNotebook = () => {
-  console.log('노트북 인스턴스 시작')
+  
+  if (!formValues.value.imageName.value) {
+    alert("이미지를 선택해주세요")
+    return;
+  }
+
+  notebookBody.value.metadata.name = formValues.value.notebookName;
+  notebookBody.value.template_pod.metadata.name = formValues.value.notebookName;
+  notebookBody.value.template_pod.containers[0].name = formValues.value.notebookName;
+  notebookBody.value.template_pod.containers[0].image = formValues.value.imageName.value;
+  notebookBody.value.template_pod.containers[0].image_pull_policy = formValues.value.imagePullPolicy;
+  notebookBody.value.template_pod.containers[0].cpu = formValues.value.minCpu;
+  notebookBody.value.template_pod.containers[0].memory = formValues.value.minRam + 'Gi';
+  notebookBody.value.template_pod.containers[0].gpu = formValues.value.numOfGpu;
+  // notebookBody.value.template_pod.containers[0].volume_mounts[0].name = formValues.value.workspaceVolumeName;
+  // notebookBody.value.template_pod.containers[0].volume_mounts[0].mount_path = formValues.value.mountPath;
+  // notebookBody.value.template_pod.volumes[0].name = formValues.value.workspaceVolumeName;
+  // notebookBody.value.template_pod.volumes[0].type_name = formValues.value.workspaceVolumeName;
+  addNotebook(localStorage.getItem('namespace'), notebookBody)
+  .then(notebook => {
+    if (notebook.value && notebook.value.code == 200000) {
+      router.push('/notebooks')
+    } else {
+      alert("오류발생:" + notebook.value? notebook.value?.result : '')
+    }
+  })
+  
 }
 
 

@@ -13,11 +13,11 @@ export const getNamespaces = async() => {
 
 /* GET /crds/namespaces/{namespace}/notebooks */
 export const getNotebooks = async ( namespace:string | null ) => {
-  const { data:notetbooks } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, {
+  const { data:notebooks } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, {
     method: 'GET',
     baseURL: config.apiServer,
   }) 
-  return notetbooks;
+  return notebooks;
 }
 
 export const getNotebookDetails = async ( namespace:string | null, name:string | string[]) => {
@@ -27,6 +27,30 @@ export const getNotebookDetails = async ( namespace:string | null, name:string |
   })
   return notebookDetails;
 }
+
+export const addNotebook = async ( namespace:string | null, body:any ) => {
+  const options = {
+    headers: { "Content-type": "application/json" },
+    method: 'POST',
+    baseURL: config.apiServer,
+    body: body.value
+
+  }
+  const { data:notebook } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, options as object )
+  return notebook;
+}
+
+export const deleteNotebook = async( namespace:string | null, name:string ) => {
+  const options = {
+    headers: { "Content-type": "application/json" },
+    method: 'DELETE',
+    baseURL: config.apiServer,
+  }
+  const { data:notebook } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks/${name}`, options as object )
+
+  return notebook;
+}
+
 
 
 /* GET /mlflow/experiment */

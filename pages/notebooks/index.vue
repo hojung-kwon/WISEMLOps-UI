@@ -48,6 +48,12 @@
               <va-button v-else size="small" disabled>Connect</va-button>
             </div>
           </template>
+          <template #cell(delete)="{ rowIndex, rowData }">
+            <div>
+              <va-button v-if="rowData.status.hasOwnProperty('running')" size="small" @click="del(rowData.name)">Delete</va-button>
+              <va-button v-else size="small" disabled>Delete</va-button>
+            </div>
+          </template>
           <template #bodyAppend>
             <tr>
               <td colspan="8">
@@ -73,8 +79,11 @@
 <script setup lang="ts">
 import { notebooksToolButton } from '~~/assets/data/ToolButton/notebooks'
 
+
 const { $bus } = useNuxtApp();
 const router = useRouter();
+const { init, close, closeAll } = useToast()
+const { confirm } = useModal()
 
 const pageTitle = ref('Notebooks')
 
@@ -84,15 +93,38 @@ const filterKeyword = ref("")
 
 
 const details = (notebookName:string) => {
-    router.push({
-      path: `/notebooks/details/${notebookName}`,
+    router.push(`/notebooks/details/${notebookName}`)
+}
+
+
+
+const del = (notebookName:string) => {
+  confirm('삭제하시겠습니까?')
+    .then((ok) => {
+      if (ok) {
+        deleteNotebook(localStorage.getItem('namespace'), notebookName)
+        .then(notebook => {
+          init({
+            message: '삭제하였습니다 ',
+            dangerouslyUseHtmlString: true,
+            position: 'bottom-right',
+            color: 'success',
+          })
+          getNotebooks(localStorage.getItem('namespace'))
+          .then((data) => {
+              notebooks.value = data.value
+          })
+        })
+      }
     })
 }
 
 const notebooks = await getNotebooks(localStorage.getItem('namespace'))
+console.log(notebooks)
 $bus.$on('namespace', async ( data:string ) =>  {
   notebooks.value = (await getNotebooks(localStorage.getItem('namespace'))).value
 })
+
 
 </script>
 
