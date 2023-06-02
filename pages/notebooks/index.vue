@@ -50,8 +50,7 @@
           </template>
           <template #cell(delete)="{ rowIndex, rowData }">
             <div>
-              <va-button v-if="rowData.status.hasOwnProperty('running')" size="small" @click="del(rowData.name)">Delete</va-button>
-              <va-button v-else size="small" disabled>Delete</va-button>
+              <va-button size="small" @click="del(rowData.name)">Delete</va-button>
             </div>
           </template>
           <template #bodyAppend>
@@ -93,7 +92,8 @@ const filterKeyword = ref("")
 
 
 const details = (notebookName:string) => {
-    router.push(`/notebooks/details/${notebookName}`)
+    // router.push(`/notebooks/details/${notebookName}`)
+    navigateTo(`/notebooks/details/${notebookName}`)
 }
 
 
@@ -120,7 +120,6 @@ const del = (notebookName:string) => {
 }
 
 const notebooks = await getNotebooks(localStorage.getItem('namespace'))
-console.log(notebooks)
 $bus.$on('namespace', async ( data:string ) =>  {
   notebooks.value = (await getNotebooks(localStorage.getItem('namespace'))).value
 })

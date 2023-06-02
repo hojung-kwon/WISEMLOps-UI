@@ -283,7 +283,7 @@ const imagePullPolicyOptions = ref([
 ])
 
 const numOfGPUOptions = ref([
-  '1', '2', '4', '8'
+  '0', '1', '2', '4', '8'
 ])
 const gpuVendorOptions = ref([
   'NVIDIA', 'AMD'
@@ -316,7 +316,12 @@ const startNotebook = () => {
   addNotebook(localStorage.getItem('namespace'), notebookBody)
   .then(notebook => {
     if (notebook.value && notebook.value.code == 200000) {
-      router.push('/notebooks')
+      // router.push('/notebooks')
+      navigateTo(`/notebooks`, {
+        replace: true,
+        redirectCode: 301,
+        external: true
+      })
     } else {
       alert("오류발생:" + notebook.value? notebook.value?.result : '')
     }
