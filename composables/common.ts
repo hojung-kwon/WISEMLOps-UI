@@ -10,7 +10,7 @@ export const pagenationView = ( pageSize:number, items: any[] ) => {
 export const hasNamespace = [
   '/notebooks',
   '/experiments',
-  '/pipelines',
+  '/pipelines',  
   '/runs',
   '/jobs',
   '/cluster/services',

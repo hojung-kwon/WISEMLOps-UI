@@ -12,7 +12,6 @@
       }"
         class="nodrag nopan"
     >
-
       <va-button v-if="findEdge(edgeId)?.selected" preset="secondary" @click="removeEdges([id])">삭제</va-button>
     </div>
   </EdgeLabelRenderer>
@@ -75,10 +74,10 @@ onEdgeClick( (e) => {
   edgeId.value = e.edge.id;
 })
 
-onKeyUp( (e:any) => {
-  if (e.key === "Delete" && findEdge(edgeId.value)?.selected) {
-    removeEdges([edgeId.value]);
-  }
-})
+// onKeyUp( (e:any) => {
+//   if (e.key === "Delete" && findEdge(edgeId.value)?.selected) {
+//     removeEdges([edgeId.value]);
+//   }
+// })
 
 </script>

@@ -1,4 +1,4 @@
-import {MarkerType} from "@vue-flow/core";
+import { MarkerType } from "@vue-flow/core";
 
 const operatorAttributes = ref({});
 
