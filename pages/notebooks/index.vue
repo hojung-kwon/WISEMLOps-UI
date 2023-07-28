@@ -27,7 +27,10 @@
           >
           <template #cell(status)="{ rowIndex, rowData }">
             <div v-if="rowData.status.hasOwnProperty('running')">
-              Running
+              <span :title="rowData.status.running.startedAt">Running</span>
+            </div>
+            <div v-if="rowData.status.hasOwnProperty('waiting')">
+              <span :title="rowData.status.reason">Waiting</span>
             </div>
           </template>
           <template #cell(created_at)="{ rowIndex, rowData }">

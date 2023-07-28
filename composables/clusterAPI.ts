@@ -70,6 +70,25 @@ export const getExperiments = async ( namespace:string | null ) => {
   return experiments;
 }
 
+
+export const getPipelines = async () => {
+
+  const { data:pipelines } = await useFetch<ResponseBody>(`/kfp/pipelines`, {
+    method: 'GET',
+    baseURL: config.apiServer
+  })
+  return pipelines
+}
+
+export const getPipelineDetails = async ( pipeline_id:string | string[] ) => {
+  const { data:pipeline_detail } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}`, {
+    method: 'GET',
+    baseURL: config.apiServer
+  })
+  return pipeline_detail;
+}
+
+
 /* GET /cluster/nodes */
 export const getNodes = async () => {
   const { data:nodes } = await useFetch<ResponseBody>(`/cluster/nodes`, {

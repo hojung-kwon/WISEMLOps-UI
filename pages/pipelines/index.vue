@@ -16,7 +16,7 @@
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
             <va-data-table
-              :items="pipelineData"
+              :items="pipelines ? pipelines.result.pipelines: []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
               :columns="pipelineColumns"
@@ -30,9 +30,14 @@
               {{ rowData.description }}
               </div>
             </template>
-            <template #cell(job)="{ rowIndex, rowData }">
+            <template #cell(created_at)="{ rowIndex, rowData }">
               <div>
-                <va-button size="small" class="px-2">확인</va-button>
+                {{ new Date(rowData.created_at).toLocaleString() }}
+              </div>
+            </template>
+            <template #cell(details)="{ rowIndex, rowData }">
+              <div>
+                <va-button size="small" @click="details(rowData.id)">상세보기</va-button>
               </div>
             </template>
             <template #bodyAppend>
@@ -41,7 +46,7 @@
                     <div class="page-view">
                       <va-pagination 
                         v-model="currentPage" 
-                        :pages="pagenationView(pageSize, pipelines)" 
+                        :pages="pagenationView(pageSize, pipelines?.result.pipelines)" 
                         :visible-pages="5"
                         gapped
                       />
@@ -51,38 +56,43 @@
               </template> 
             </va-data-table>
           </va-card-content>
-          <va-card-actions align="between">
-            <div>여기에 action</div>
-            <div>여기에 action</div>
-          </va-card-actions>
         </va-card>
       </div>
     </div>
   </div> 
   </template>
   
-  <script setup lang="ts">
-  import { pipelinesToolButton } from '~~/assets/data/ToolButton/pipelines'
-  // 임시 코드
-  import { pipelines } from '~~/assets/data/sample/pipelines';
+<script setup lang="ts">
+import { pipelinesToolButton } from '~~/assets/data/ToolButton/pipelines'
+
+const { $bus } = useNuxtApp();
   
+const toolButtons = ref(pipelinesToolButton);
+const pageTitle = ref('Pipelines')
+
+
+const currentPage = ref(1)
+const filterKeyword = ref('')
   
-  const toolButtons = ref(pipelinesToolButton);
-  const pageTitle = ref('Pipelines')
-  const pipelineData = pipelines;
+const details = ( id: string ) => {
+  navigateTo(`/pipelines/details/${id}`)
+}
+
+
+const pipelines = await getPipelines();
+$bus.$on('namespace', async ( data:string ) =>  {
+  pipelines.value = (await getNotebooks(localStorage.getItem('namespace'))).value
+})
+
+</script>
   
-  const currentPage = ref(1)
-  const filterKeyword = ref('')
-   
-  </script>
-  
-  <style>
-  .table-cell {
-    display: inline-block;
-    width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  </style>
+<style>
+.table-cell {
+  display: inline-block;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+</style>

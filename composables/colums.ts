@@ -4,9 +4,13 @@ export const pipelineColumns = ref([
   { label: '이름', key: 'name' },
   { label: '설명', key: 'description' },
   { label: '최종 갱신', key: 'created_at' },
-  { label: '작업', key: 'job' },
+  { label: '상세보기', key: 'details' },
 ])
 
+export const pipelineDetailTabs = ref([
+  { id: 'graph', icon: 'visibility', title: 'Graph' },
+  { id: 'yaml', icon: 'code', title: 'Yaml' },
+])
 
 /* /crds/namespaces/{namespace}/notebooks */
 export const notebookColums = ref([

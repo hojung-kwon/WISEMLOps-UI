@@ -27,3 +27,25 @@ export const notebookDetailToolButton = [
     path: '/notebooks/add',
   }
 ]
+
+
+export const pipelineDetailToolButton = [
+  {
+    id: 'createRun',
+    title: 'Create Run',
+    icon: 'add',
+    path: '/run/add',
+  },
+  {
+    id: 'uploadVersion',
+    title: 'Upload Version',
+    icon: 'add',
+    path: '/pipeline/upload',
+  },
+  {
+    id: 'createExperiment',
+    title: 'Create experiment',
+    icon: 'add',
+    path: '/experiment/add',
+  }
+]
