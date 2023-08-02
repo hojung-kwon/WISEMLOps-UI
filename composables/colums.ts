@@ -1,4 +1,28 @@
 
+
+/* Runs */
+
+export const runColumns = ref([
+  { label: '이름', key: 'name' },
+  // { label: '설명', key: 'description' },
+  { label: '상태', key: 'status' },
+  { label: '생성', key: 'created_at' },
+  { label: '시작', key: 'scheduled_at' },
+  { label: 'Experiment', key: 'experiment' },  
+  { label: 'Pipeline', key: 'pipeline_version' },  
+  { label: '상세보기', key: 'details' },  
+])
+
+/* Experiments */
+export const experimentColumns = ref([
+  { label: '이름', key: 'name' },
+  { label: '설명', key: 'description' },
+  { label: '최종 갱신', key: 'created_at' },
+  { label: 'Storage status', key: 'storage_state' },  
+  { label: '상세보기', key: 'details' },  
+])
+
+
 /* /pipelines */
 export const pipelineColumns = ref([
   { label: '이름', key: 'name' },
@@ -11,6 +35,7 @@ export const pipelineDetailTabs = ref([
   { id: 'graph', icon: 'visibility', title: 'Graph' },
   { id: 'yaml', icon: 'code', title: 'Yaml' },
 ])
+
 
 /* /crds/namespaces/{namespace}/notebooks */
 export const notebookColums = ref([

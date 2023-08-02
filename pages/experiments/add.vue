@@ -37,12 +37,12 @@
                 </va-input>
               </div>
               <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
-                <va-checkbox v-model="formValues.createRunYN" label="등록 후 Run 생성" class="mb2" />
+                <va-checkbox :disabled="true" v-model="formValues.createRunYN" label="등록 후 Run 생성" class="mb2" />
               </div>
             </div>
           </va-card-content>
           <va-card-actions>
-          <va-button @click="addExperiment">등록</va-button>
+          <va-button @click="createExperiment">등록</va-button>
           <va-button preset="secondary" border-color="secondary" @click="pageBack">취소</va-button>
         </va-card-actions>
         </va-card>
@@ -61,13 +61,30 @@ const formValues = ref({
   createRunYN: false,
 })
 
+const experimentBody = ref({
+  name: "",
+  description: ""
+})
 
 const pageBack = () => {
   router.back()
 }
 
-const addExperiment = () => {
-  console.log("Experiment 등록")
+const createExperiment = () => {
+  experimentBody.value.name = formValues.value.experimentName
+  experimentBody.value.description = formValues.value.description
+  addExperiment(experimentBody)
+  .then(experiment => {
+    if (experiment.value && experiment.value.code == 200000) {
+      navigateTo(`/experiments`, {
+        replace: true,
+        redirectCode: 301,
+        external: true
+      })
+    } else {
+      alert("오류발생" + experiment.value? experiment.value?.result : '')
+    }
+  })
 }
 </script>
 

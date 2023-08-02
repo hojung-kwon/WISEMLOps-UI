@@ -11,6 +11,7 @@ export const getNamespaces = async() => {
   return namespaces;
 }
 
+
 /* GET /crds/namespaces/{namespace}/notebooks */
 export const getNotebooks = async ( namespace:string | null ) => {
   const { data:notebooks } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, {
@@ -53,21 +54,36 @@ export const deleteNotebook = async( namespace:string | null, name:string ) => {
 
 
 
-/* GET /mlflow/experiment */
-export const getExperiments = async ( namespace:string | null ) => {
-  
-  const query = {
-    max_result: 1000,
-    filter_string: '',
-    order_by: '',
-    page_token: ''
-  }
+export const getRuns = async () => {
+  const { data:runs } = await useFetch<ResponseBody>(`/kfp/runs`, {
+    method: 'GET',
+    baseURL: config.apiServer,
+  }) 
+  return runs;  
+}
 
-  const { data:experiments } = await useFetch<ResponseBody>(`/mlflow/experiment`, {
+
+
+/* GET /kfp/experiment */
+export const getExperiments = async () => {
+
+  const { data:experiments } = await useFetch<ResponseBody>(`/kfp/experiments`, {
     method: 'GET',
     baseURL: config.apiServer,
   }) 
   return experiments;
+}
+
+export const addExperiment = async (body:any ) => {
+  const options = {
+    headers: { "Content-type": "application/json" },
+    method: 'POST',
+    baseURL: config.apiServer,
+    body: body.value
+
+  }
+  const { data:experiment } = await useFetch<ResponseBody>(`/kfp/experiments`, options as object )
+  return experiment;
 }
 
 
