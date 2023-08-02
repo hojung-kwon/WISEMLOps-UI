@@ -50,7 +50,7 @@
 
 import GraphTab from '~~/components/pipelines/graphTab.vue'
 import YamlTab from '~~/components/notebooks/yamlTab.vue';
-import { pipelineDetailToolButton } from '~~/assets/data/ToolButton/notebooks'
+import { pipelineDetailToolButton } from '~~/assets/data/ToolButton/pipelines'
 
 
 const route = useRoute()

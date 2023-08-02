@@ -41,18 +41,18 @@
               </div>
             </template>
             <template #bodyAppend>
-                <tr>
-                  <td colspan="8">
-                    <div class="page-view">
-                      <va-pagination 
-                        v-model="currentPage" 
-                        :pages="pagenationView(pageSize, pipelines?.result.pipelines)" 
-                        :visible-pages="5"
-                        gapped
-                      />
-                    </div>
-                  </td>
-                </tr>
+              <tr>
+                <td colspan="8">
+                  <div class="page-view">
+                    <va-pagination 
+                      v-model="currentPage" 
+                      :pages="pagenationView(pageSize, pipelines?.result.pipelines)" 
+                      :visible-pages="5"
+                      gapped
+                    />
+                  </div>
+                </td>
+              </tr>
               </template> 
             </va-data-table>
           </va-card-content>
@@ -80,9 +80,9 @@ const details = ( id: string ) => {
 
 
 const pipelines = await getPipelines();
-$bus.$on('namespace', async ( data:string ) =>  {
-  pipelines.value = (await getNotebooks(localStorage.getItem('namespace'))).value
-})
+// $bus.$on('namespace', async ( data:string ) =>  {
+//   pipelines.value = (await getNotebooks(localStorage.getItem('namespace'))).value
+// })
 
 </script>
   
