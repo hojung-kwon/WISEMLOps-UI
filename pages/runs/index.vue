@@ -16,34 +16,65 @@
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
             <va-data-table
-              :items="pipelineData"
+              :items="runs ? runs.result.runs : []"
               :no-data-html="noItemText"
               :no-data-filtered-html="noItemText"
-              :columns="columns"
+              :columns="runColumns"
               :per-page="pageSize"
               :current-page="currentPage"
               :filter="filterKeyword" 
               sticky-header
             >
-            <template #cell(description)="{ rowIndex, rowData }">
-              <div class="table-cell" :title="rowData.description">
-              {{ rowData.description }}
+            <template #cell(name)="{ rowIndex, rowData }" >
+              <div class="table-cell" :title="rowData.name">
+                {{ rowData.name }}
               </div>
             </template>
-            <template #cell(job)="{ rowIndex, rowData }">
+            <template #cell(experiment)="{ rowIndex, rowData }">
+              <div v-for="item in rowData.resource_references">
+                <div v-if="item.key.type == 'EXPERIMENT'">
+                  {{ item.name }}
+                </div>
+              </div>
+            </template>
+            <template #cell(pipeline_version)="{ rowIndex, rowData }">
+              <div v-for="item in rowData.resource_references">
+                <div class="table-cell" :title="item.name" v-if="item.key.type == 'PIPELINE_VERSION'">
+                  {{ item.name }}
+                </div>
+              </div>
+            </template>
+            <template #cell(created_at)="{ rowIndex, rowData }">
+              <div>
+                {{ new Date(rowData.created_at).toLocaleString() }}
+              </div>
+            </template>
+            <template #cell(scheduled_at)="{ rowIndex, rowData }">
+              <div>
+                {{ new Date(rowData.created_at).toLocaleString() }}
+              </div>
+            </template>
+            <template #cell(details)="{ rowIndex, rowData }">
               <div>
                 <va-button size="small" class="px-2">확인</va-button>
               </div>
             </template>
             <template #bodyAppend>
-              FOOTER
+              <tr>
+                <td colspan="8">
+                  <div class="page-view">
+                    <va-pagination 
+                      v-model="currentPage" 
+                      :pages="pagenationView(pageSize, runs?.result.runs)" 
+                      :visible-pages="5"
+                      gapped
+                    />
+                  </div>
+                </td>
+              </tr>
             </template>
             </va-data-table>
           </va-card-content>
-          <va-card-actions align="between">
-            <div>여기에 action</div>
-            <div>여기에 action</div>
-          </va-card-actions>
         </va-card>
       </div>
     </div>
@@ -52,35 +83,26 @@
   
   <script setup lang="ts">
   import { runsToolButton } from '~~/assets/data/ToolButton/runs'
-  // 임시 코드
-  import { pipelines } from '~~/assets/data/sample/pipelines';
   
+
   
   const toolButtons = ref(runsToolButton);
   const pageTitle = ref('Runs')
-  const pipelineData = pipelines;
-  
+    
   
   const pageSize: number = 10;
   const currentPage: number = 1;
   const filterKeyword: string = "";
   const noItemText: string = "No Item";
+
+  const runs = await getRuns();
   
-  // pipline을 예제로한 임시코드
-  const columns = [
-    { label: '이름', key: 'name' },
-    { label: '설명', key: 'description' },
-    { label: '최종 갱신', key: 'created_at' },
-    { label: '작업', key: 'job' },
-  ]
-  
-    
   </script>
   
   <style>
   .table-cell {
     display: inline-block;
-    width: 300px;
+    width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
