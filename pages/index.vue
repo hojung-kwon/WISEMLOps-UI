@@ -20,6 +20,8 @@
             <li>2023.05.17 - K8S Node목록 화면</li>
             <li>2023.06.01 - Notebook connect 붙임</li>
             <li>2023.06.02 - Notebook 등록기능, 삭제기능 추가</li>
+            <li>2023.07.28 - Pipelines기능 추가</li>
+            <li>2023.08.02 - Pipelines, Experiments, Runs 기능추가</li>
           </va-card-content>
         </va-card>
       </div>
