@@ -1,16 +1,16 @@
 <template>
   <va-modal 
-    v-model="$props.showPopup" 
+    v-model="props.showPopup" 
     title="파이프라인"
     mobile-fullscreen
     hide-default-actions
     size="large"
   >
     <va-data-table
-      :items="pipelineData"
+      :items="pipelineVersions ? pipelineVersions.result.versions: []"
       :no-data-html="noItemText"
       :no-data-filtered-html="noItemText"
-      :columns="columns"
+      :columns="pipelineVersionColumns"
       :per-page="pageSize"
       :current-page="currentPage"
       :filter="filterKeyword" 
@@ -20,45 +20,47 @@
         {{ rowData.description }}
         </div>
       </template>
-      <template #cell(job)="{ rowIndex, rowData }">
+      <template #cell(details)="{ rowIndex, rowData }">
         <div>
-          <va-button size="small" class="px-2">선택</va-button>
+          <va-button size="small" class="px-2" @click="selectPipelineVersion(rowData)">선택</va-button>
         </div>
       </template>
-      <template #bodyAppend>
-        FOOTER
-      </template>
-  
     </va-data-table>
   </va-modal>
   </template>
   
-  <script setup lang="ts">
-  
-  interface Props {
-    showPopup: boolean
-  }
-  const props = withDefaults(defineProps<Props>(), {
-    showPopup: false,
-  })
-  
-  // 임시 코드
-  import { pipelines } from '~~/assets/data/sample/pipelines';
-  const pipelineData = pipelines;
-  const pageSize: number = 10;
-  const currentPage: number = 1;
-  const filterKeyword: string = "";
-  const noItemText: string = "No Item";
-  
-    // pipline을 예제로한 임시코드
-    const columns = [
-      { label: '이름', key: 'name' },
-      { label: '설명', key: 'description' },
-      { label: '최종 갱신', key: 'created_at' },
-      { label: '작업', key: 'job' },
-    ]
-  
-  </script>
+<script setup lang="ts">
+const emit = defineEmits(["getPipelineVersion"]);
+
+interface Props {
+  showPopup: boolean
+  pipelineId: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showPopup: false,
+  pipelineId: ''
+})
+
+const pageSize: number = 10;
+const currentPage: number = 1;
+const filterKeyword: string = "";
+const noItemText: string = "No Item";
+
+const pipelineVersions:ResponseBody | any = ref(null)
+
+watch( () => props.pipelineId, async (oldId, newId) =>{
+  props.pipelineId = newId 
+  const versions = await getPipelineVersions(props.pipelineId);
+  pipelineVersions.value = versions.value;
+})
+
+const selectPipelineVersion = (pipelineVersion:any) => {
+  emit('getPipelineVersion', pipelineVersion)
+
+}
+
+</script>
   
   <style>
   .table-cell {

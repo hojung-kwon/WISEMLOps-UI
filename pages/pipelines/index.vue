@@ -25,6 +25,21 @@
               :filter="filterKeyword" 
               sticky-header
             >
+            <template #cell(toggle)="{ row, isExpanded }">
+            <va-button
+                @click="row.toggleRowDetails()"
+                :icon="isExpanded ? 'va-arrow-up': 'va-arrow-down'"
+                preset="secondary"
+                class="w-full"
+              >
+              </va-button>
+            </template>
+            <template #expandableRow="{ rowData }">
+              <div class="flex gap-2 px-3 py-3" style="background-color:#eee">
+                <div>{{ rowData.id }}</div>
+                <PipelineVersion v-model:pipeline_id="rowData.id"/>
+              </div>
+            </template>
             <template #cell(description)="{ rowIndex, rowData }">
               <div class="table-cell" :title="rowData.description">
               {{ rowData.description }}
@@ -63,7 +78,9 @@
   </template>
   
 <script setup lang="ts">
+import PipelineVersion from '~~/components/pipelines/pipelineVersion.vue'
 import { pipelinesToolButton } from '~~/assets/data/ToolButton/pipelines'
+
 
 const { $bus } = useNuxtApp();
   

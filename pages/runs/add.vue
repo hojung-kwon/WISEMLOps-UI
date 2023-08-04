@@ -30,10 +30,10 @@
                     <va-button class="px-4" icon="search" @click="showPopup.pipeline=!showPopup.pipeline"></va-button>
                   </template>
                 </va-input>
-                    <PipelinePopup v-model="showPopup.pipeline"/>
+                    <PipelinePopup v-model="showPopup.pipeline" @getPipeline="getPipeline"/>
                 <va-input
                   label="Pipeline version"
-                  v-model="formValues.pipelineVersion"
+                  v-model="formValues.pipelineVersionName"
                   placeholder="pipeline version"
                   background="backgroundPrimary"
                   outline
@@ -43,11 +43,10 @@
                     <va-button class="px-4" icon="search" @click="showPopup.pipelineVersion=!showPopup.pipelineVersion"></va-button>
                   </template>
                 </va-input>
-                    <PipelineVersionPopup v-model="showPopup.pipelineVersion"/>
-
+                  <PipelineVersionPopup v-model="showPopup.pipelineVersion" v-model:pipelineId="formValues.pipelineId" @getPipelineVersion="getPipelineVersion"/>
                 <va-input
                   label="이름"
-                  v-model="formValues.pipelineVersion"
+                  v-model="formValues.runName"
                   placeholder="Run name"
                   background="backgroundPrimary"
                   outline
@@ -66,8 +65,7 @@
                     <va-button class="px-4" icon="search" @click="showPopup.experiment=!showPopup.experiment"></va-button>
                   </template>
                 </va-input>
-                  <ExperimentPopup v-model="showPopup.experiment"/>
-
+                 <ExperimentPopup v-model="showPopup.experiment" @getExperiment="getExperiment"/>
               </div>
             </div>
             <div class="row mb-2">
@@ -142,15 +140,14 @@ const pageTitle = ref('Run 등록')
 const showPopup = ref({
   pipeline: false,
   pipelineVersion: false,
-  experiment: false
+  experiment: false,
 })
-
-const showPipelinePopup = ref(false)
 
 const formValues = ref({
   pipelineId: '',
   pipelineName: '',
   pipelineVersion: '',
+  pipelineVersionName: '',
   runName: '',
   experimentId: '',
   experimentName: '',
@@ -186,6 +183,31 @@ const pageBack = () => {
 const startRun= () => {
   console.log("Run 실행")
 }
+
+const getPipeline = (pipeline:any) => {
+  showPopup.value.pipeline = false;
+  formValues.value.pipelineId = pipeline.id;
+  formValues.value.pipelineName = pipeline.name;
+}
+
+const getPipelineVersion = (pipelineVersion:any) => {
+  showPopup.value.pipelineVersion = false;
+  formValues.value.pipelineVersion = pipelineVersion.id;
+  formValues.value.pipelineVersionName = pipelineVersion.name;
+}
+
+
+const getExperiment = (experiment:any) => {
+  showPopup.value.experiment = false;
+  formValues.value.experimentId = experiment.id;
+  formValues.value.experimentName = experiment.name;
+}
+
+const resetVersion = () => {
+  
+}
+
+
 </script>
 
 <style>

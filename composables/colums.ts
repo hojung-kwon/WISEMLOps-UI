@@ -25,8 +25,15 @@ export const experimentColumns = ref([
 
 /* /pipelines */
 export const pipelineColumns = ref([
+  { label: ' ' , key: 'toggle'},
   { label: '이름', key: 'name' },
   { label: '설명', key: 'description' },
+  { label: '최종 갱신', key: 'created_at' },
+  { label: '상세보기', key: 'details' },
+])
+
+export const pipelineVersionColumns = ref([
+  { label: '이름', key: 'name'},
   { label: '최종 갱신', key: 'created_at' },
   { label: '상세보기', key: 'details' },
 ])

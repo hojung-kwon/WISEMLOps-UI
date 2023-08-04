@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 // import { defineEmits } from "vue";
-const emit = defineEmits(["toggle-drawer"]);
+const emit = defineEmits(["useTab"]);
 
 interface COLUMNS {
     icon: string,
