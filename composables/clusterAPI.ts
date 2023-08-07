@@ -62,6 +62,14 @@ export const getRuns = async () => {
   return runs;  
 }
 
+export const getRunDetails = async( run_id: string | string[] ) => {
+  const { data:runDetail } = await useFetch<ResponseBody>(`/kfp/runs/${run_id}`, {
+    method: 'GET',
+    baseURL: config.apiServer
+  })
+  return runDetail;
+}
+
 
 
 /* GET /kfp/experiment */
@@ -97,20 +105,40 @@ export const getPipelines = async () => {
 }
 
 export const getPipelineVersions = async(pipeline_id:string | string[]) => {
-  const { data:pipeline_versions } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}/versions`, {
+  const { data:pipelineVersions } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}/versions`, {
     method: 'GET',
     baseURL: config.apiServer
   })
-  return pipeline_versions;
+  return pipelineVersions;
 }
 
-export const getPipelineDetails = async ( pipeline_id:string | string[] ) => {
-  const { data:pipeline_detail } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}`, {
+export const getPipelineDetails = async ( pipeline_id:string | string[], version:string) => {
+
+  if (version) {
+    const { data:pipelineDetail } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${version}`, {
+      method: 'GET',
+      baseURL: config.apiServer
+    })
+    return pipelineDetail;
+  } else {
+    const { data:pipelineDetail } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}`, {
+      method: 'GET',
+      baseURL: config.apiServer
+    })
+    return pipelineDetail;
+  }
+}
+
+
+
+export const getPipelineVersionTemplate = async (version:string) => {
+  const { data:template } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${version}/template`, {
     method: 'GET',
     baseURL: config.apiServer
   })
-  return pipeline_detail;
+  return template;
 }
+
 
 
 /* GET /cluster/nodes */

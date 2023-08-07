@@ -19,7 +19,7 @@ export const pipelineDetailToolButton = [
     id: 'createRun',
     title: 'Create Run',
     icon: 'add',
-    path: '/run/add',
+    path: '/runs/add',
   },
   {
     id: 'uploadVersion',

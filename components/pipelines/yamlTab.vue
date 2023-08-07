@@ -18,11 +18,12 @@
 <script setup lang="ts">
 
 
-const props = withDefaults(defineProps<{modelValue: string[],}>(), {})
+const props = withDefaults(defineProps<{modelValue: string[]}>(), {})
 
-
+console.log(props)
 const yamlString = ref('');
 onMounted(() => {
+  console.log('======'+props.modelValue.toString())
   props.modelValue.forEach((item:any) => {
     yamlString.value += item + '\n';
   })

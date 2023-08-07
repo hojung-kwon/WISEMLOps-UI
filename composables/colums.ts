@@ -13,6 +13,13 @@ export const runColumns = ref([
   { label: '상세보기', key: 'details' },  
 ])
 
+
+export const runDetailTabs = ref([
+  { id: 'graph', icon: 'visibility', title: 'Graph' },
+  { id: 'runOutput', icon: 'code', title: 'Run Output' },  
+  { id: 'config', icon: 'code', title: 'Config' },  
+])
+
 /* Experiments */
 export const experimentColumns = ref([
   { label: '이름', key: 'name' },

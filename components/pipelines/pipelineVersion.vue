@@ -22,6 +22,7 @@
 
 
 <script setup lang="ts">
+const router = useRouter()
 
 interface Props {
   pipeline_id: string
@@ -36,7 +37,13 @@ const noItemText: string = "No versions";
 const pipelineVersions = await getPipelineVersions(props.pipeline_id);
 
 const details = ( id: string, version: string ) => {
-  navigateTo(`/pipelines/${id}/versions/${version}`)
+  router.push({
+    path: `/pipelines/details/${id}`,
+    query: {
+      version: version
+    }
+  })
+  // navigateTo(`/pipelines/details/${id}/?version=${version}`)
 }
 
 </script>

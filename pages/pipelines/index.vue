@@ -36,7 +36,6 @@
             </template>
             <template #expandableRow="{ rowData }">
               <div class="flex gap-2 px-3 py-3" style="background-color:#eee">
-                <div>{{ rowData.id }}</div>
                 <PipelineVersion v-model:pipeline_id="rowData.id"/>
               </div>
             </template>
@@ -97,9 +96,6 @@ const details = ( id: string ) => {
 
 
 const pipelines = await getPipelines();
-// $bus.$on('namespace', async ( data:string ) =>  {
-//   pipelines.value = (await getNotebooks(localStorage.getItem('namespace'))).value
-// })
 
 </script>
   

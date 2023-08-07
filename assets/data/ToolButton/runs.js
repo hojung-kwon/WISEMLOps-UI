@@ -6,3 +6,25 @@ export const runsToolButton = [
     path: '/runs/add',
   }
 ]
+
+
+export const runDetailToolButton = [
+  {
+    id: 'cloneRun',
+    title: 'Clone Run',
+    // icon: 'add',
+    path: '/runs/clone',
+  },
+  {
+    id: 'terminate',
+    title: 'Terminate',
+    // icon: 'add',
+    path: '/runs/terminate',
+  },
+  {
+    id: 'archive',
+    title: 'Archive',
+    // icon: 'add',
+    path: '/runs/archive',
+  }
+]

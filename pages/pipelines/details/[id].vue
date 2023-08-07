@@ -35,7 +35,8 @@
         </template>
       </va-tabs>
       <div v-if="curTab=='graph'">
-        <GraphTab v-model="graph" />
+        <!-- <GraphTab v-model="graph" /> -->
+        <Workflow ref="workflow"  />
       </div>
 
       <div v-if="curTab=='yaml'">
@@ -58,25 +59,35 @@ const router = useRouter()
 const pageTitle = ref('Pipelines')
 const id = ref(route.params.id);
 const toolButtons = ref(pipelineDetailToolButton)
-const yaml = ref([])
+const yaml:any = ref([])
 const graph = ref({
   "meta" : {}
 })
 const curTab = ref('graph')
 
-const details = await getPipelineDetails(id.value)
+const version = route.query.version ? route.query.version.toString() : ''
+
+// const details = ref({})
+
+const details = await getPipelineDetails(id.value, version)
 
 const pageBack = () => {
   router.back()
 }
 
-const selectTab = () => {
+const selectTab = async () => {
   // yaml.value= details.value?.result['yaml'];
+
 
 }
 
-onMounted(() => {
-  graph.value.meta = details.value?.result['default_version']
-
+onMounted(async() =>  {
+  let pipelineVersion = version
+  if (!pipelineVersion) {
+    pipelineVersion = details.value?.result['default_version']['id']
+  }
+  let template = await getPipelineVersionTemplate(pipelineVersion);
+  yaml.value = [ template.value?.result['template'].toString() ]
+  
 })
 </script>
