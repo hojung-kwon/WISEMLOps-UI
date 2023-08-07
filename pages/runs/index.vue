@@ -56,7 +56,7 @@
             </template>
             <template #cell(details)="{ rowIndex, rowData }">
               <div>
-                <va-button size="small" class="px-2">확인</va-button>
+                <va-button size="small" class="px-2" @click="details(rowData.id)">확인</va-button>
               </div>
             </template>
             <template #bodyAppend>
@@ -97,6 +97,10 @@
 
   const runs = await getRuns();
   
+  const details = ( id: string ) => {
+  navigateTo(`/runs/details/${id}`)
+}
+
   </script>
   
   <style>
