@@ -35,7 +35,7 @@
         </template>
       </va-tabs>
       <div v-if="curTab=='graph'">
-        <GraphTab v-model="graph" />
+       <GraphTab />
       </div>
       <div v-if="curTab=='runOutput'">
         <RunOutputTab v-model="runOutput"/>
@@ -50,9 +50,12 @@
 </template>
 
 <script setup lang="ts">
+import GraphTab from '~~/components/runs/graphTab.vue'
 import RunOutputTab from '~~/components/runs/runOutputTab.vue'
 import ConfigTab from '~~/components/runs/configTab.vue'
+
 import { runDetailToolButton } from '~~/assets/data/ToolButton/runs'
+
 
 const route = useRoute()
 const router = useRouter()
@@ -79,7 +82,5 @@ const selectTab = () => {
 const pageBack = () => {
   router.back()
 }
-
-
 
 </script>

@@ -18,7 +18,7 @@
                 <Workflow ref="workflow" :pipeline="pipeline" :nodeInfo="nodeInfo" @sideEnable="sideEnable" @savePipeline="savePipeline" />
               </div>
               <div class="workflow-detail">
-                <PipelineWorkflowDetail :nodeInfo="nodeInfo" :sideEnabled=sideEnabled @sideEnable="sideEnable" @saveNode="saveNode" />
+                <PipelineWorkflowAdd :nodeInfo="nodeInfo" :sideEnabled=sideEnabled @sideEnable="sideEnable" @saveNode="saveNode" />
               </div>
             </div>
             <!-- <Workflow ref="workflow" :pipeline="pipeline" @savePipeline="savePipeline"/> -->
@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import PipelineWorkflowDetail from '~~/components/pipelines/pipelineWorkflowDetail.vue';
+import PipelineWorkflowAdd from '~~/components/pipelines/pipelineWorkflowAdd.vue';
 
 
 const router = useRouter();
@@ -99,7 +99,4 @@ const saveNode = (node:workflowNodeInfo) => {
   border: 1px solid #aaa;
 }
 
-.workflow-wrapper .workflow-detail {
-
-}
 </style>

@@ -35,8 +35,7 @@
         </template>
       </va-tabs>
       <div v-if="curTab=='graph'">
-        <!-- <GraphTab v-model="graph" /> -->
-        <Workflow ref="workflow"  />
+        <GraphTab v-model="graph" />
       </div>
 
       <div v-if="curTab=='yaml'">
@@ -51,18 +50,20 @@
 
 import GraphTab from '~~/components/pipelines/graphTab.vue'
 import YamlTab from '~~/components/notebooks/yamlTab.vue';
-import { pipelineDetailToolButton } from '~~/assets/data/ToolButton/pipelines'
 
+import { pipelineDetailToolButton } from '~~/assets/data/ToolButton/pipelines'
 
 const route = useRoute()
 const router = useRouter()
 const pageTitle = ref('Pipelines')
 const id = ref(route.params.id);
 const toolButtons = ref(pipelineDetailToolButton)
+
 const yaml:any = ref([])
 const graph = ref({
   "meta" : {}
 })
+
 const curTab = ref('graph')
 
 const version = route.query.version ? route.query.version.toString() : ''
@@ -77,9 +78,8 @@ const pageBack = () => {
 
 const selectTab = async () => {
   // yaml.value= details.value?.result['yaml'];
-
-
 }
+
 
 onMounted(async() =>  {
   let pipelineVersion = version
@@ -91,3 +91,4 @@ onMounted(async() =>  {
   
 })
 </script>
+

@@ -4,16 +4,14 @@
     <Workflow ref="workflow" :pipeline="pipeline" :nodeInfo="nodeInfo" @sideEnable="sideEnable" @savePipeline="savePipeline" />
   </div>
   <div class="workflow-detail">
-    <PipelineWorkflowDetail :nodeInfo="nodeInfo" :sideEnabled=sideEnabled @sideEnable="sideEnable" @saveNode="saveNode" />
+    <RunWorkflowDetail :nodeInfo="nodeInfo" :sideEnabled=sideEnabled @sideEnable="sideEnable" @saveNode="saveNode" />
   </div>
 </div> 
 </template>
+
 <script setup lang="ts">
 import Workflow from '~~/components/workflow/index.vue'
-import PipelineWorkflowDetail from '~~/components/pipelines/pipelineWorkflowDetail.vue';
-
-
-const props = withDefaults(defineProps<{modelValue: any,}>(), {})
+import RunWorkflowDetail from '~~/components/runs/runWorkflowDetail.vue';
 
 const sideEnabled = ref(false);
 const workflow=ref();

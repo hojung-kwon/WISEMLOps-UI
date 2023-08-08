@@ -26,7 +26,6 @@
             background="backgroundPrimary"
             outline
             class="inputbox mb-2"
-            readonly
           >
           </va-input>
         </div>
@@ -40,7 +39,6 @@
             background="backgroundPrimary"
             outline
             class="inputbox mb-2"
-            readonly
           >
           </va-input>
         </div>
@@ -54,7 +52,6 @@
             background="backgroundPrimary"
             outline
             class="inputbox mb-2"
-            readonly
           >
           </va-input>
         </div>
@@ -68,7 +65,6 @@
             background="backgroundPrimary"
             outline
             class="inputbox mb-2"
-            readonly
           >
           </va-input>
         </div>
@@ -82,7 +78,6 @@
             background="backgroundPrimary"
             outline
             class="inputbox mb-2"
-            readonly
           >
           </va-input>
         </div>
@@ -96,7 +91,6 @@
             background="backgroundPrimary"
             outline
             class="inputbox mb-2"
-            readonly
           >
           </va-input>
         </div>

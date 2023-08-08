@@ -39,7 +39,7 @@ import * as Workflow from './ts/Workflow'
 
 interface Props {
   pipeline: any;
-  nodeInfo: workflowNodeInfo;
+  nodeInfo: any;
 }
 
 const props = withDefaults(defineProps<Props>(), {  
