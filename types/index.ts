@@ -14,4 +14,17 @@ declare global {
     message?: string;
     result: any;
   }
+
+  interface workflowNodeInfo {
+    id: string;
+    label: string;
+    attribute: {
+      inputParams: string;
+      outputParams: string;
+      args: string;
+      command: string;
+      image: string
+    }
+  }
 }
+

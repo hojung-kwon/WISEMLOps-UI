@@ -1,143 +1,30 @@
 <template>
-  <div class="workflow-wrapper">
-    <div class="workflow-pannel">
-      <VueFlow 
+  <VueFlow 
 
-        fit-view-on-init      
-        class="vue-flow-basic-example"  
-      >
-        <Background :variant="dots" />
-        <CustomControls/>
-        <template #node-toolbar="props" >
-          <CustomNode 
-            :id="props.id"
-            :data="props.data"
-            :label="props.label"
-            :selected="props.selected"
-            />
-        </template>
-        <template #edge-custom="props">
-          <CustomEdge v-bind="props"/>
-        </template>
-      </VueFlow>
-    </div>
-    <div class="workflow-detail">
-      <va-sidebar v-model="sideEnabled" position="right" width="40vw">
-        <va-card outlined style="height:100%">
-          <va-card-title>상세보기</va-card-title>
-          <va-card-content>
-            <div class="row mb-2">
-              <div class="flex flex-col xl12 lg12 md12 sm12 xs12">
-                <va-input
-                  label="ID"
-                  v-model="nodeInfo.id"
-                  placeholder="Node Label"
-                  background="backgroundElement"
-                  outline
-                  class="inputbox mb-2"
-                  readonly
-                >
-                </va-input>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="flex flex-col xl12 lg12 md12 sm12 xs12">
-                <va-input
-                  label="label"
-                  v-model="nodeInfo.label"
-                  placeholder="Node Label"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                </va-input>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="flex flex-col xl12 lg12 md12 sm12 xs12">
-                <va-input
-                  label="Input Parameters"
-                  v-model="nodeInfo.attribute.inputParams"
-                  placeholder="Input Parameters"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                </va-input>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="flex flex-col xl12 lg12 md12 sm12 xs12">
-                <va-input
-                  label="Output Parameters"
-                  v-model="nodeInfo.attribute.outputParams"
-                  placeholder="Output Parameters"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                </va-input>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="flex flex-col xl12 lg12 md12 sm12 xs12">
-                <va-input
-                  label="Arguments"
-                  v-model="nodeInfo.attribute.args"
-                  placeholder="Arguments"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                </va-input>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="flex flex-col xl12 lg12 md12 sm12 xs12">
-                <va-input
-                  label="Command"
-                  v-model="nodeInfo.attribute.command"
-                  placeholder="Command"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                </va-input>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="flex flex-col xl12 lg12 md12 sm12 xs12">
-                <va-input
-                  label="Image"
-                  v-model="nodeInfo.attribute.image"
-                  placeholder="Image"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                </va-input>
-              </div>
-            </div>
-          </va-card-content>
-          <va-card-actions>
-            <va-button @click="onNodeSave">저장</va-button>
-          </va-card-actions>
-        </va-card>
-      </va-sidebar>
-    </div>
-  </div>
-  <!-- <va-checkbox
-    v-model="sideEnabled"
-    class="mt-2"
-    label="Show"
-  /> -->
- </template>
+    fit-view-on-init      
+    class="vue-flow-basic-example"  
+  >
+    <Background />
+    <CustomControls/>
+    <template #node-toolbar="props" >
+      <CustomNode 
+        :id="props.id"
+        :data="props.data"
+        :label="props.label"
+        :selected="props.selected"
+        />
+    </template>
+    <template #edge-custom="props">
+      <CustomEdge v-bind="props"/>
+    </template>
+  </VueFlow>
+</template>
 
 <script setup lang="ts">
 // 워크플로우 라이브러리
 
 import { VueFlow, useVueFlow, MarkerType, useNode, applyNodeChanges} from '@vue-flow/core'
-import { Background } from '@vue-flow/background'
+import { Background, BackgroundVariant } from '@vue-flow/background'
 import { MiniMap } from '@vue-flow/minimap'
 import { Controls } from '@vue-flow/controls'
 const { findNode, onConnect, onPaneClick, onNodeClick, setNodeExtent, addEdges, setEdges, setTransform, setNodes, addNodes, project, vueFlowRef, toObject } = useVueFlow();
@@ -149,30 +36,18 @@ import CustomControls from './CustomControls.vue'
 import * as Workflow from './ts/Workflow'
 
 
-const sideEnabled = ref(false);
 
 interface Props {
-  pipeline: any
+  pipeline: any;
+  nodeInfo: workflowNodeInfo;
 }
 
 const props = withDefaults(defineProps<Props>(), {  
 })
 
-
-const nodeInfo = ref({
-  id: '',
-  label: '',
-  attribute: {
-    inputParams: '',
-    outputParams: '',
-    args: '',
-    command: '',
-    image: ''    
-  }
-})
+const emit = defineEmits(["sideEnable", "savePipeline"])
 
 onMounted(() => {
-  console.log(props.pipeline)
   const flow = props.pipeline
   if (flow) {
     const [x = 0, y = 0] = flow.position
@@ -182,7 +57,6 @@ onMounted(() => {
   }
 })
 
-
 onConnect(( params:any ) => {
   var edge = Workflow.createEdge(params)
   addEdges([edge]);
@@ -190,40 +64,30 @@ onConnect(( params:any ) => {
 })
 
 onPaneClick(( param:any ) => {
-  sideEnabled.value=false;
+  emit('sideEnable', false, {});
+  
 })
 
 onNodeClick(( param:any) => {
-  
-  sideEnabled.value = true;
   const node:any = findNode(param.node.id);
-  nodeInfo.value.id = node.id;
-  nodeInfo.value.label = node.label;
-  nodeInfo.value.attribute = node.data.hasOwnProperty('attribute')?node.data.attribute:{};
-  
+  node.attribute = node.data.hasOwnProperty('attribute')?node.data.attribute:{};
+  emit('sideEnable', true, node)
 }) 
 
-const onNodeSave = () => {
-  let node:any = findNode(nodeInfo.value.id);
-  
+const saveNode = (nodeInfo:any) => {
+  let node:any = findNode(nodeInfo.id);
   if (node) {
-    node.data.attribute = nodeInfo.value.attribute;
-    node.label = nodeInfo.value.label;
-    node.id = nodeInfo.value.id;
+    node.data.attribute = nodeInfo.attribute;
+    node.label = nodeInfo.label;
+    node.id = nodeInfo.id;
   }
-  
-  
 }
-
-
-
-const emit = defineEmits(['savePipeline'])
 
 const getPipeline = (e:any) => {
-  
   emit('savePipeline', toObject())
 }
-defineExpose({ getPipeline })
+
+defineExpose({ getPipeline, saveNode })
 
 </script>
 
@@ -237,30 +101,4 @@ defineExpose({ getPipeline })
 @import '@vue-flow/core/dist/theme-default.css';
 
 
-.workflow-wrapper {
-  width: 100%;
-  height:calc( 100vh - 300px ); 
-  display: flex;
-  flex-direction: row;
-
-}
-
-.workflow-wrapper .workflow-pannel {
-  flex-grow: 1;
-  border: 1px solid #aaa;
-}
-
-.workflow-wrapper .workflow-detail {
-
-}
-.inputbox {
-  width: 100%;
-}
-.inputbox label {
-  margin: 4px 0;
-}
-
-.inputbox input {
-  padding: 12px 0;
-}
 </style>
