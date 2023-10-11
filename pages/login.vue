@@ -1,16 +1,26 @@
 <template>
   <div class="contents">
     <h1 class="login-title">WISE MLOps Platform</h1>
-
-    <div>
-      <va-form class="form-box" tag="form" @submit.prevent="handleSubmit">
-        <va-input class="form-data" type="text" label="User ID" v-model="userId" />
-        <va-input class="form-data" type="password" label="Password" v-model="userPassword" />
-
-        <va-button class="button" type="submit">Login</va-button>
-        <va-button class="button" type="button" v-on:click="accountFind">Find Account</va-button>
-      </va-form>
+    <div class="row justiry-center">
+      <div class="flex flex-col xs4"></div>
+      <div class="flex flex-col xs4">
+        <va-card>
+          <va-form class="form-box" tag="form" @submit.prevent="handleSubmit">
+            <va-card-content>
+              <va-input class="form-data" type="text" label="User ID" v-model="userId" />
+              <va-input class="form-data" type="password" label="Password" v-model="userPassword" />
+            </va-card-content>
+            <va-card-actions align="between">
+              <va-button type="submit">Login</va-button>
+              <va-button type="button" v-on:click="accountFind">Find Account</va-button>
+            </va-card-actions>
+          </va-form>
+        </va-card>
+      </div>
+      <div class="flex flex-col xs4"></div>
     </div>
+
+
   </div>
 </template>
 
@@ -73,20 +83,14 @@ body,
 
 .form-box {
   width: 300px;
-  text-align: center;
+  /* text-align: center; */
   margin: 10px auto;
 }
 
 .form-data {
-  text-align: center;
+  /* text-align: center; */
+  width: 100%;
   margin: auto;
   padding: 10px 0px 0px 10px;
-}
-
-.button {
-  text-align: center;
-  margin: auto;
-  padding: 0px;
-  margin: 20px 10px 0px 10px;
 }
 </style>
