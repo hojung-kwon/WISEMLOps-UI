@@ -3,9 +3,9 @@
 /* Runs */
 
 export const runColumns = ref([
-  { label: '이름', key: 'name' },
+  { label: '이름', key: 'display_name' },
   // { label: '설명', key: 'description' },
-  { label: '상태', key: 'status' },
+  { label: '상태', key: 'state' },
   { label: '생성', key: 'created_at' },
   { label: '시작', key: 'scheduled_at' },
   { label: 'Experiment', key: 'experiment' },  
@@ -22,25 +22,29 @@ export const runDetailTabs = ref([
 
 /* Experiments */
 export const experimentColumns = ref([
-  { label: '이름', key: 'name' },
+  { label: '이름', key: 'display_name' },
   { label: '설명', key: 'description' },
-  { label: '최종 갱신', key: 'created_at' },
+  { label: '생성일시', key: 'created_at' },
   { label: 'Storage status', key: 'storage_state' },  
   { label: '상세보기', key: 'details' },  
 ])
 
+export const experimentDetailTabs = ref([
+  { id: 'active', icon: 'code', title: 'Active' },
+  { id: 'archive', icon: 'code', title: 'Archive' },
+])
 
 /* /pipelines */
 export const pipelineColumns = ref([
   { label: ' ' , key: 'toggle'},
-  { label: '이름', key: 'name' },
+  { label: '이름', key: 'display_name' },
   { label: '설명', key: 'description' },
   { label: '최종 갱신', key: 'created_at' },
   { label: '상세보기', key: 'details' },
 ])
 
 export const pipelineVersionColumns = ref([
-  { label: '이름', key: 'name'},
+  { label: '이름', key: 'display_name'},
   { label: '최종 갱신', key: 'created_at' },
   { label: '상세보기', key: 'details' },
 ])

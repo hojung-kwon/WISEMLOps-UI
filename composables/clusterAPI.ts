@@ -112,8 +112,15 @@ export const getPipelineVersions = async(pipeline_id:string | string[]) => {
   return pipelineVersions;
 }
 
+// custom pipelinedetail사용
 export const getPipelineDetails = async ( pipeline_id:string | string[], version:string) => {
 
+  const { data: pipelineDetail } = await useFetch<ResponseBody>(`/pipeline/${pipeline_id}`, {
+    method: 'GET',
+    baseURL: config.apiServer
+  })
+  return pipelineDetail;
+  /*
   if (version) {
     const { data:pipelineDetail } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${version}`, {
       method: 'GET',
@@ -127,8 +134,9 @@ export const getPipelineDetails = async ( pipeline_id:string | string[], version
     })
     return pipelineDetail;
   }
-}
+  */
 
+}
 
 
 export const getPipelineVersionTemplate = async (version:string) => {
@@ -139,6 +147,18 @@ export const getPipelineVersionTemplate = async (version:string) => {
   return template;
 }
 
+
+export const addPipelineWowrkflow = async (body:any) => {
+  const options = {
+    headers: { "Content-type": "application/json" },
+    method: 'POST',
+    baseURL: config.apiServer,
+    body: body.value
+
+  }
+  const { data:pipeline } = await useFetch<ResponseBody>(`/pipeline`, options as object )
+  return pipeline;  
+}
 
 
 /* GET /cluster/nodes */

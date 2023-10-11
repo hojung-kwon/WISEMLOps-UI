@@ -1,10 +1,6 @@
 <template>
-  <va-data-table
-    :items="pipelineVersions ? pipelineVersions.result.versions: []"
-    :no-data-html="noItemText"
-    :no-data-filtered-html="noItemText"
-    :columns="pipelineVersionColumns"
-  >
+  <va-data-table :items="pipelineVersions ? pipelineVersions.result.pipeline_versions : []" :no-data-html="noItemText"
+    :no-data-filtered-html="noItemText" :columns="pipelineVersionColumns">
     <template #cell(created_at)="{ rowIndex, rowData }">
       <div>
         {{ new Date(rowData.created_at).toLocaleString() }}
@@ -12,12 +8,11 @@
     </template>
     <template #cell(details)="{ rowIndex, rowData }">
       <div>
-        <va-button size="small" @click="details(props.pipeline_id, rowData.id )">상세보기</va-button>
+        <va-button size="small" @click="details(props.pipeline_id, rowData.pipeline_version_id)">상세보기</va-button>
       </div>
     </template>
 
   </va-data-table>
-
 </template>
 
 
@@ -36,7 +31,7 @@ const noItemText: string = "No versions";
 
 const pipelineVersions = await getPipelineVersions(props.pipeline_id);
 
-const details = ( id: string, version: string ) => {
+const details = (id: string, version: string) => {
   router.push({
     path: `/pipelines/details/${id}`,
     query: {
