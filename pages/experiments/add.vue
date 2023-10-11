@@ -4,7 +4,7 @@
       <va-navbar color="backgroundPrimary">
         <template #left>
           <va-button icon="arrow_back" preset="secondary" @click="pageBack" class="pr-4"></va-button>
-          <PageTitle :pageTitle="pageTitle"/>
+          <PageTitle :pageTitle="pageTitle" />
         </template>
       </va-navbar>
     </div>
@@ -18,22 +18,11 @@
                 <h6 class="va-h6, mb-2">기본정보</h6>
               </div>
               <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
-                <va-input
-                  label="이름"                
-                  v-model="formValues.experimentName"
-                  placehholder="experiment name"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
+                <va-input label="이름" v-model="formValues.experimentName" placeholder="experiment name" outline
+                  class="inputbox mb-2">
                 </va-input>
-                <va-input
-                  label="설명"                
-                  v-model="formValues.description"
-                  placeholder="description"
-                  outline
-                  class="inputbox mb-2"
-                >
+                <va-input label="설명" v-model="formValues.description" placeholder="description" outline
+                  class="inputbox mb-2">
                 </va-input>
               </div>
               <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
@@ -42,9 +31,9 @@
             </div>
           </va-card-content>
           <va-card-actions>
-          <va-button @click="createExperiment">등록</va-button>
-          <va-button preset="secondary" border-color="secondary" @click="pageBack">취소</va-button>
-        </va-card-actions>
+            <va-button @click="createExperiment">등록</va-button>
+            <va-button preset="secondary" border-color="secondary" @click="pageBack">취소</va-button>
+          </va-card-actions>
         </va-card>
       </div>
     </div>
@@ -74,17 +63,17 @@ const createExperiment = () => {
   experimentBody.value.name = formValues.value.experimentName
   experimentBody.value.description = formValues.value.description
   addExperiment(experimentBody)
-  .then(experiment => {
-    if (experiment.value && experiment.value.code == 200000) {
-      navigateTo(`/experiments`, {
-        replace: true,
-        redirectCode: 301,
-        external: true
-      })
-    } else {
-      alert("오류발생" + experiment.value? experiment.value?.result : '')
-    }
-  })
+    .then(experiment => {
+      if (experiment.value && experiment.value.code == 102200) {
+        navigateTo(`/experiments`, {
+          replace: true,
+          redirectCode: 301,
+          external: true
+        })
+      } else {
+        alert("오류발생" + experiment.value ? experiment.value?.result : '')
+      }
+    })
 }
 </script>
 
@@ -92,6 +81,7 @@ const createExperiment = () => {
 .inputbox {
   width: 100%;
 }
+
 .inputbox label {
   margin: 4px 0;
 }
@@ -99,5 +89,4 @@ const createExperiment = () => {
 .inputbox input {
   padding: 12px 0;
 }
-
 </style>
