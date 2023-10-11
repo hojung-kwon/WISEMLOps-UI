@@ -54,11 +54,17 @@ export const deleteNotebook = async( namespace:string | null, name:string ) => {
 
 
 
-export const getRuns = async () => {
+export const getRuns = async ( experiment_id:string | string[] | null ) => {
+  
+  let query:any = {}
+  if (experiment_id) query.experiment_id = experiment_id;
+
   const { data:runs } = await useFetch<ResponseBody>(`/kfp/runs`, {
     method: 'GET',
     baseURL: config.apiServer,
+    query: query
   }) 
+  console.log(runs);
   return runs;  
 }
 
