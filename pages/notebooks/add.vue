@@ -28,7 +28,7 @@
                 <h6 class="va-h6 mb-2">Notebook Image</h6>
               </div>
               <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
-                <va-select label="Image" v-model="formValues.imageName" :options="notebooImageOptions"
+                <va-select label="Image" v-model="formValues.imageName" :options="notebookImageOptions"
                   :disabled="formValues.customImageYN" background="backgroundPrimary" outline class="selectbox mb-2" />
               </div>
               <div class="flex flex-col  xl8 lg10 md12 sm12 xs12">
@@ -171,7 +171,7 @@ const formValues = ref({
 
 })
 
-const notebooImageOptions = ref([
+const notebookImageOptions = ref([
   {
     text: 'kubeflownotebookswg/jupyter-scipy:v1.7.0',
     value: 'kubeflownotebookswg/jupyter-scipy:v1.7.0'
