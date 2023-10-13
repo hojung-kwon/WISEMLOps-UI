@@ -108,8 +108,8 @@ const savePipeline = (e: any) => {
   addPipelineWowrkflow(formValues)
     .then(pipeline => {
       console.log(pipeline.value);
-      if (pipeline.value && pipeline.value.code == 107200) {
-        console.log(pipeline)
+      if (pipeline.value && pipeline.value.code == 100200) {
+
         navigateTo(`/pipelines`, {
           replace: true,
           redirectCode: 301,

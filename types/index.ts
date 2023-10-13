@@ -18,13 +18,14 @@ declare global {
   interface workflowNodeInfo {
     id: string;
     label: string;
-    attribute: {
-      inputParams: string;
-      outputParams: string;
-      args: string;
-      command: string;
-      image: string
-    }
+    // attribute: {
+    //   // inputParams: string;
+    //   // outputParams: string;
+    //   // args: string;
+    //   // command: string;
+    //   // image: string
+    // }
+    attribute: any;
   }
 }
 

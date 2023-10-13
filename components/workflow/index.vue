@@ -1,21 +1,12 @@
 <template>
-  <VueFlow 
-
-    fit-view-on-init      
-    class="vue-flow-basic-example"  
-  >
+  <VueFlow fit-view-on-init class="vue-flow-basic-example">
     <Background />
-    <CustomControls/>
-    <template #node-toolbar="props" >
-      <CustomNode 
-        :id="props.id"
-        :data="props.data"
-        :label="props.label"
-        :selected="props.selected"
-        />
+    <CustomControls />
+    <template #node-toolbar="props">
+      <CustomNode :id="props.id" :data="props.data" :label="props.label" :selected="props.selected" />
     </template>
     <template #edge-custom="props">
-      <CustomEdge v-bind="props"/>
+      <CustomEdge v-bind="props" />
     </template>
   </VueFlow>
 </template>
@@ -23,7 +14,7 @@
 <script setup lang="ts">
 // 워크플로우 라이브러리
 
-import { VueFlow, useVueFlow, MarkerType, useNode, applyNodeChanges} from '@vue-flow/core'
+import { VueFlow, useVueFlow, MarkerType, useNode, applyNodeChanges } from '@vue-flow/core'
 import { Background, BackgroundVariant } from '@vue-flow/background'
 import { MiniMap } from '@vue-flow/minimap'
 import { Controls } from '@vue-flow/controls'
@@ -42,7 +33,7 @@ interface Props {
   nodeInfo: any;
 }
 
-const props = withDefaults(defineProps<Props>(), {  
+const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits(["sideEnable", "savePipeline"])
@@ -57,33 +48,34 @@ onMounted(() => {
   }
 })
 
-onConnect(( params:any ) => {
+onConnect((params: any) => {
   var edge = Workflow.createEdge(params)
   addEdges([edge]);
   // save();
 })
 
-onPaneClick(( param:any ) => {
+onPaneClick((param: any) => {
   emit('sideEnable', false, {});
-  
+
 })
 
-onNodeClick(( param:any) => {
-  const node:any = findNode(param.node.id);
-  node.attribute = node.data.hasOwnProperty('attribute')?node.data.attribute:{};
+onNodeClick((param: any) => {
+  const node: any = findNode(param.node.id);
+  node.attribute = node.data.hasOwnProperty('attribute') ? node.data.attribute : {};
   emit('sideEnable', true, node)
-}) 
+})
 
-const saveNode = (nodeInfo:any) => {
-  let node:any = findNode(nodeInfo.id);
+const saveNode = (nodeInfo: any) => {
+  let node: any = findNode(nodeInfo.id);
   if (node) {
     node.data.attribute = nodeInfo.attribute;
     node.label = nodeInfo.label;
     node.id = nodeInfo.id;
+    console.log(node);
   }
 }
 
-const getPipeline = (e:any) => {
+const getPipeline = (e: any) => {
   emit('savePipeline', toObject())
 }
 
@@ -99,6 +91,4 @@ defineExpose({ getPipeline, saveNode })
 @import '@vue-flow/core/dist/style.css';
 /* this contains the default theme, these are optional styles */
 @import '@vue-flow/core/dist/theme-default.css';
-
-
 </style>

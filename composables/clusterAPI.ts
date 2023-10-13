@@ -162,7 +162,7 @@ export const addPipelineWowrkflow = async (body:any) => {
     body: body.value
 
   }
-  const { data:pipeline } = await useFetch<ResponseBody>(`/pipeline`, options as object )
+  const { data:pipeline } = await useFetch<ResponseBody>(`/workflow/pipeline`, options as object )
   return pipeline;  
 }
 
