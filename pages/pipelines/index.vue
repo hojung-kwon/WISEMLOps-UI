@@ -15,9 +15,9 @@
         <va-card outlined>
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
-            <va-data-table :items="pipelines ? pipelines.result.pipelines : []" :no-data-html="noItemText"
-              :no-data-filtered-html="noItemText" :columns="pipelineColumns" :per-page="pageSize"
-              :current-page="currentPage" :filter="filterKeyword" sticky-header>
+            <va-data-table :items="pipelines && pipelines.result.pipelines ? pipelines.result.pipelines : []"
+              :no-data-html="noItemText" :no-data-filtered-html="noItemText" :columns="pipelineColumns"
+              :per-page="pageSize" :current-page="currentPage" :filter="filterKeyword" sticky-header>
               <template #cell(toggle)="{ row, isExpanded }">
                 <va-button @click="row.toggleRowDetails()" :icon="isExpanded ? 'va-arrow-up' : 'va-arrow-down'"
                   preset="secondary" class="w-full">
@@ -47,7 +47,8 @@
                 <tr>
                   <td colspan="8">
                     <div class="page-view">
-                      <va-pagination v-model="currentPage" :pages="pagenationView(pageSize, pipelines?.result.pipelines)"
+                      <va-pagination v-model="currentPage"
+                        :pages="pagenationView(pageSize, pipelines?.result.pipelines ? pipelines.result.pipelines : [])"
                         :visible-pages="5" gapped />
                     </div>
                   </td>

@@ -15,9 +15,9 @@
         <va-card outlined>
           <va-card-title>{{ pageTitle }}</va-card-title>
           <va-card-content>
-            <va-data-table :items="experiments ? experiments.result.experiments : []" :no-data-html="noItemText"
-              :no-data-filtered-html="noItemText" :columns="experimentColumns" :per-page="pageSize"
-              :current-page="currentPage" :filter="filterKeyword" sticky-header>
+            <va-data-table :items="experiments && experiments.result.experiments ? experiments.result.experiments : []"
+              :no-data-html="noItemText" :no-data-filtered-html="noItemText" :columns="experimentColumns"
+              :per-page="pageSize" :current-page="currentPage" :filter="filterKeyword" sticky-header>
               <template #cell(description)="{ rowIndex, rowData }">
                 <div class="table-cell" :title="rowData.description">
                   {{ rowData.description }}
@@ -38,7 +38,8 @@
                   <td colspan="8">
                     <div class="page-view">
                       <va-pagination v-model="currentPage"
-                        :pages="pagenationView(pageSize, experiments?.result.experiments)" :visible-pages="5" gapped />
+                        :pages="pagenationView(pageSize, experiments?.result.experiments ? experiments?.result.experiments : [])"
+                        :visible-pages="5" gapped />
                     </div>
                   </td>
                 </tr>

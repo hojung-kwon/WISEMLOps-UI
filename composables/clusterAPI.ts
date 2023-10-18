@@ -64,7 +64,6 @@ export const getRuns = async ( experiment_id:string | string[] | null ) => {
     baseURL: config.apiServer,
     query: query
   }) 
-  console.log(runs);
   return runs;  
 }
 
