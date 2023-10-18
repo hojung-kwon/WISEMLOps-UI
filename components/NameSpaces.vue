@@ -1,12 +1,8 @@
 <template>
-<div class="row justify-start align-center ">
-  <va-select
-    v-model="selectedNamespace"
-    :options="$props.namespaces"
-    class="selectbox"
-    @update:modelValue="selectNamespace"
-  />
-</div>
+  <div class="row justify-start align-center ">
+    <va-select v-model="selectedNamespace" :options="$props.namespaces" class="selectbox"
+      @update:modelValue="selectNamespace" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -22,7 +18,7 @@ const emit = defineEmits(['selectNamespace'])
 const selectedNamespace = ref(props.namespace)
 
 
-const selectNamespace = (e:any) => {
+const selectNamespace = (e: any) => {
   emit('selectNamespace', e)
   $bus.$emit("namespace", e)
 }
@@ -31,7 +27,7 @@ const selectNamespace = (e:any) => {
 
 <style>
 .selectbox {
-  color: #000
+  color: #000;
+  background-color: #fff
 }
-
 </style>

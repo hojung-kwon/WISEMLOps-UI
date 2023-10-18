@@ -1,17 +1,11 @@
 <template>
-  <va-navbar color="primary" class="main-nav py-0 px-2" >
+  <va-navbar color="primary" class="main-nav py-0 px-2">
     <template #left>
-      <NameSpaces 
-        v-if="hasNamespace.indexOf(route.path) > -1"
-        v-model:namespaces="namespaceOption" 
-        v-model:namespace="namespace" 
-        @selectNamespace="selectNamespace" />
+      <NameSpaces v-if="hasNamespace.indexOf(route.path) > -1" v-model:namespaces="namespaceOption"
+        v-model:namespace="namespace" @selectNamespace="selectNamespace" />
       <div v-else class="px-3">
         {{ namespace }}
       </div>
-    </template>
-    <template #default>
-      <div></div>
     </template>
     <template #right>
       <div class="row justify-end align-center ">
@@ -39,7 +33,7 @@
                 <va-list-item-section class="mr-3">
                   <va-list-item-label v-on:click="logout()">로그아웃</va-list-item-label>
                 </va-list-item-section>
-              </va-list-item>            
+              </va-list-item>
             </va-list>
           </va-button-dropdown>
         </span>
@@ -65,25 +59,25 @@ const namespaces = await getNamespaces();
 
 const namespaceOption = ref(namespaces.value?.result)
 
-const namespace = ref(!localStorage.getItem('namespace')?localStorage.setItem('namespace', 'default'): localStorage.getItem('namespace'))
+const namespace = ref(!localStorage.getItem('namespace') ? localStorage.setItem('namespace', 'default') : localStorage.getItem('namespace'))
 
-const selectNamespace = (e:any) => {
-  localStorage.setItem('namespace', e)  
-  
+const selectNamespace = (e: any) => {
+  localStorage.setItem('namespace', e)
+
 }
 
 const accountSetting = () => {
-    alert("Account Setting.");
+  alert("Account Setting.");
 }
 
 const logout = () => {
-    alert("Logout.");
+  alert("Logout.");
 }
 </script>
 
 <style scoped>
 .main-nav {
-    height: 56px;
-    z-index: 3;
-  }
+  height: 56px;
+  z-index: 3;
+}
 </style>
