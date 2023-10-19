@@ -173,24 +173,24 @@ const formValues = ref({
 
 const notebookImageOptions = ref([
   {
-    text: 'kubeflownotebookswg/jupyter-scipy:v1.7.0',
-    value: 'kubeflownotebookswg/jupyter-scipy:v1.7.0'
+    text: 'kubeflownotebookswg/jupyter-scipy:v1.8.0-rc.2',
+    value: 'kubeflownotebookswg/jupyter-scipy:v1.8.0-rc.2'
   },
   {
-    text: 'kubeflownotebookswg/jupyter-pytorch-full:v1.7.0',
-    value: 'kubeflownotebookswg/jupyter-pytorch-full:v1.7.0'
+    text: 'kubeflownotebookswg/jupyter-pytorch-full:v1.8.0-rc.2',
+    value: 'kubeflownotebookswg/jupyter-pytorch-full:v1.8.0-rc.2'
   },
   {
-    text: 'kubeflownotebookswg/jupyter-pytorch-cuda-full:v1.7.0',
-    value: 'kubeflownotebookswg/jupyter-pytorch-cuda-full:v1.7.0'
+    text: 'kubeflownotebookswg/jupyter-pytorch-cuda-full:v1.8.0-rc.2',
+    value: 'kubeflownotebookswg/jupyter-pytorch-cuda-full:v1.8.0-rc.2'
   },
   {
-    text: 'kubeflownotebookswg/jupyter-tensorflow-full:v1.7.0',
-    value: 'kubeflownotebookswg/jupyter-tensorflow-full:v1.7.0'
+    text: 'kubeflownotebookswg/jupyter-tensorflow-full:v1.8.0-rc.2',
+    value: 'kubeflownotebookswg/jupyter-tensorflow-full:v1.8.0-rc.2'
   },
   {
-    text: 'kubeflownotebookswg/jupyter-tensorflow-cuda-full:v1.7.0',
-    value: 'kubeflownotebookswg/jupyter-tensorflow-cuda-full:v1.7.0'
+    text: 'kubeflownotebookswg/jupyter-tensorflow-cuda-full:v1.8.0-rc.2',
+    value: 'kubeflownotebookswg/jupyter-tensorflow-cuda-full:v1.8.0-rc.2'
   },
 ])
 
