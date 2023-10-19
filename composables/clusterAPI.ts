@@ -1,12 +1,11 @@
-const config = useAppConfig();
-
-
+const runtimeConfig = useRuntimeConfig();
+console.log('runtimeConfig.apiServer', runtimeConfig.public.apiServer);
 /* GET /cluster/namepaces */
 
 export const getNamespaces = async() => {
   const { data:namespaces } = await useFetch<ResponseBody>(`/cluster/namespaces`, {
     method: 'GET',
-    baseURL: config.apiServer
+    baseURL: String(runtimeConfig.public.apiServer)
   })
   return namespaces;
 }
@@ -16,7 +15,7 @@ export const getNamespaces = async() => {
 export const getNotebooks = async ( namespace:string | null ) => {
   const { data:notebooks } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   }) 
   return notebooks;
 }
@@ -24,7 +23,7 @@ export const getNotebooks = async ( namespace:string | null ) => {
 export const getNotebookDetails = async ( namespace:string | null, name:string | string[]) => {
   const { data:notebookDetails } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks/${name}`, {
     method: 'GET',
-    baseURL: config.apiServer
+    baseURL: String(runtimeConfig.public.apiServer)
   })
   return notebookDetails;
 }
@@ -33,7 +32,7 @@ export const addNotebook = async ( namespace:string | null, body:any ) => {
   const options = {
     headers: { "Content-type": "application/json" },
     method: 'POST',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
     body: body.value
 
   }
@@ -45,7 +44,7 @@ export const deleteNotebook = async( namespace:string | null, name:string ) => {
   const options = {
     headers: { "Content-type": "application/json" },
     method: 'DELETE',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   }
   const { data:notebook } = await useFetch<ResponseBody>(`/crds/namespaces/${namespace}/notebooks/${name}`, options as object )
 
@@ -61,7 +60,7 @@ export const getRuns = async ( experiment_id:string | string[] | null ) => {
 
   const { data:runs } = await useFetch<ResponseBody>(`/kfp/runs`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
     query: query
   }) 
   return runs;  
@@ -70,7 +69,7 @@ export const getRuns = async ( experiment_id:string | string[] | null ) => {
 export const getRunDetails = async( run_id: string | string[] ) => {
   const { data:runDetail } = await useFetch<ResponseBody>(`/kfp/runs/${run_id}`, {
     method: 'GET',
-    baseURL: config.apiServer
+    baseURL: String(runtimeConfig.public.apiServer)
   })
   return runDetail;
 }
@@ -82,7 +81,7 @@ export const getExperiments = async () => {
 
   const { data:experiments } = await useFetch<ResponseBody>(`/kfp/experiments`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   }) 
   return experiments;
 }
@@ -91,7 +90,7 @@ export const addExperiment = async (body:any ) => {
   const options = {
     headers: { "Content-type": "application/json" },
     method: 'POST',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
     body: body.value
 
   }
@@ -104,7 +103,7 @@ export const getPipelines = async () => {
 
   const { data:pipelines } = await useFetch<ResponseBody>(`/kfp/pipelines`, {
     method: 'GET',
-    baseURL: config.apiServer
+    baseURL: String(runtimeConfig.public.apiServer)
   })
   return pipelines
 }
@@ -112,7 +111,7 @@ export const getPipelines = async () => {
 export const getPipelineVersions = async(pipeline_id:string | string[]) => {
   const { data:pipelineVersions } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}/versions`, {
     method: 'GET',
-    baseURL: config.apiServer
+    baseURL: String(runtimeConfig.public.apiServer)
   })
   return pipelineVersions;
 }
@@ -122,20 +121,20 @@ export const getPipelineDetails = async ( pipeline_id:string | string[], version
 
   const { data: pipelineDetail } = await useFetch<ResponseBody>(`/pipeline/${pipeline_id}`, {
     method: 'GET',
-    baseURL: config.apiServer
+    baseURL: String(runtimeConfig.public.apiServer)
   })
   return pipelineDetail;
   /*
   if (version) {
     const { data:pipelineDetail } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${version}`, {
       method: 'GET',
-      baseURL: config.apiServer
+      baseURL: String(runtimeConfig.public.apiServer)
     })
     return pipelineDetail;
   } else {
     const { data:pipelineDetail } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}`, {
       method: 'GET',
-      baseURL: config.apiServer
+      baseURL: String(runtimeConfig.public.apiServer)
     })
     return pipelineDetail;
   }
@@ -147,7 +146,7 @@ export const getPipelineDetails = async ( pipeline_id:string | string[], version
 export const getPipelineVersionTemplate = async (version:string) => {
   const { data:template } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${version}/template`, {
     method: 'GET',
-    baseURL: config.apiServer
+    baseURL: String(runtimeConfig.public.apiServer)
   })
   return template;
 }
@@ -157,7 +156,7 @@ export const addPipelineWowrkflow = async (body:any) => {
   const options = {
     headers: { "Content-type": "application/json" },
     method: 'POST',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
     body: body.value
 
   }
@@ -170,7 +169,7 @@ export const addPipelineWowrkflow = async (body:any) => {
 export const getNodes = async () => {
   const { data:nodes } = await useFetch<ResponseBody>(`/cluster/nodes`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   })
   return nodes;
 }
@@ -179,7 +178,7 @@ export const getNodes = async () => {
 export const getVolumes = async () => {
   const { data:volumes } = await useFetch<ResponseBody>(`/cluster/volumes`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   }) 
   return volumes;
 }
@@ -188,7 +187,7 @@ export const getVolumes = async () => {
 export const getPods = async ( namespace:string | null) => {
   const { data:pods } = await useFetch<ResponseBody>(`/cluster/namespaces/${namespace}/pods`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   })
   return pods;
 }
@@ -197,7 +196,7 @@ export const getPods = async ( namespace:string | null) => {
 export const getDeploys = async ( namespace:string | null) => {
   const { data:deploys } = await useFetch<ResponseBody>(`/cluster/namespaces/${namespace}/deployments`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   })
   return deploys;
 }
@@ -206,7 +205,7 @@ export const getDeploys = async ( namespace:string | null) => {
 export const getServices = async ( namespace:string | null)=> {
   const { data:services  } = await useFetch<ResponseBody>(`/cluster/namespaces/${namespace}/services`, {
     method: 'GET',
-    baseURL: config.apiServer,
+    baseURL: String(runtimeConfig.public.apiServer),
   })
   return services;
 }
