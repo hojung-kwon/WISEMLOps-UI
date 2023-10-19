@@ -19,7 +19,7 @@
 <script setup lang="ts">
 
 import { sideMenuData } from '~~/assets/data/sidemenu';
-const config = useAppConfig();
+const runtimeConfig = useRuntimeConfig();
 const sideMenu = ref(sideMenuData);
 
 const userId = ref('admin');
@@ -33,7 +33,7 @@ useHead({
 
 const { data:namespaces } = await useFetch<ResponseBody>('/cluster/namespaces', {
   method: 'GET',
-  baseURL: config.apiServer
+  baseURL: String(runtimeConfig.apiServer)
 })
 
 
