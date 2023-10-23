@@ -129,7 +129,7 @@ const attributeServeModel = ref({
 });
 
 const onChangeType = () => {
-  console.log(props.nodeInfo.attribute.type)
+
   switch (props.nodeInfo.attribute.type) {
     case 'load_data':
       attribute.value = JSON.stringify(attributeLoadData.value)

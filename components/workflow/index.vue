@@ -40,6 +40,7 @@ const emit = defineEmits(["sideEnable", "savePipeline"])
 
 onMounted(() => {
   const flow = props.pipeline
+  console.log(flow)
   if (flow) {
     const [x = 0, y = 0] = flow.position
     setNodes(flow.nodes)

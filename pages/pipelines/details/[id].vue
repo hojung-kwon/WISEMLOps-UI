@@ -16,6 +16,19 @@
         <h5 class="px-4 va-h5">{{ id }}</h5>
       </div>
     </div>
+    <div class="row mb-2">
+      <div class="flex flex-col md12">
+        <h6 class="va-h6 mb-2">기본정보</h6>
+      </div>
+      <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
+        <va-input label="이름" v-model="pipeline_name" placeholder="pipeline name" background="backgroundPrimary" outline
+          class="inputbox mb-2" readonly>
+        </va-input>
+        <va-input label="설명" v-model="pipeline_description" placeholder="description" background="backgroundPrimary"
+          outline class="inputbox mb-2" readonly>
+        </va-input>
+      </div>
+    </div>
     <div class="row">
       <div class="px-3 mt-3 flex flex-col xs12">
         <va-tabs v-model="curTab" class="px-3">
@@ -27,7 +40,7 @@
           </template>
         </va-tabs>
         <div v-if="curTab == 'graph'">
-          <GraphTab v-model="graph" />
+          <GraphTab v-model="pipeline" />
         </div>
 
         <div v-if="curTab == 'yaml'">
@@ -63,7 +76,11 @@ const version = route.query.version ? route.query.version.toString() : ''
 // const details = ref({})
 
 const details = await getPipelineDetails(id.value, version)
-console.log(details)
+console.log(details.value?.result)
+
+const pipeline_name = ref(details.value?.result.pipeline_name)
+const pipeline_description = ref(details.value?.result.pipeline_description)
+const pipeline = ref(details.value?.result)
 
 const pageBack = () => {
   router.back()
