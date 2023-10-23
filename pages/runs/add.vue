@@ -4,7 +4,7 @@
       <va-navbar color="backgroundPrimary">
         <template #left>
           <va-button icon="arrow_back" preset="secondary" @click="pageBack" class="pr-4"></va-button>
-          <PageTitle :pageTitle="pageTitle"/>
+          <PageTitle :pageTitle="pageTitle" />
         </template>
       </va-navbar>
     </div>
@@ -18,54 +18,33 @@
                 <h6 class="va-h6 mb-2">기본정보</h6>
               </div>
               <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
-                <va-input
-                  label="Pipeline"
-                  v-model="formValues.pipelineName"
-                  placeholder="pipeline name"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                  <template #appendInner >
-                    <va-button class="px-4" icon="search" @click="showPopup.pipeline=!showPopup.pipeline"></va-button>
+                <va-input label="Pipeline" v-model="formValues.pipelineName" placeholder="pipeline name"
+                  background="backgroundPrimary" outline class="inputbox mb-2">
+                  <template #appendInner>
+                    <va-button class="px-4" icon="search" @click="showPopup.pipeline = !showPopup.pipeline"></va-button>
                   </template>
                 </va-input>
-                    <PipelinePopup v-model="showPopup.pipeline" @getPipeline="getPipeline"/>
-                <va-input
-                  label="Pipeline version"
-                  v-model="formValues.pipelineVersionName"
-                  placeholder="pipeline version"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                  <template #appendInner >
-                    <va-button class="px-4" icon="search" @click="showPopup.pipelineVersion=!showPopup.pipelineVersion"></va-button>
+                <PipelinePopup v-model="showPopup.pipeline" @getPipeline="getPipeline" />
+                <va-input label="Pipeline version" v-model="formValues.pipelineVersionName" placeholder="pipeline version"
+                  background="backgroundPrimary" outline class="inputbox mb-2">
+                  <template #appendInner>
+                    <va-button class="px-4" icon="search"
+                      @click="showPopup.pipelineVersion = !showPopup.pipelineVersion"></va-button>
                   </template>
                 </va-input>
-                  <PipelineVersionPopup v-model="showPopup.pipelineVersion" v-model:pipelineId="formValues.pipelineId" @getPipelineVersion="getPipelineVersion"/>
-                <va-input
-                  label="이름"
-                  v-model="formValues.runName"
-                  placeholder="Run name"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
+                <PipelineVersionPopup v-model="showPopup.pipelineVersion" v-model:pipelineId="formValues.pipelineId"
+                  @getPipelineVersion="getPipelineVersion" />
+                <va-input label="이름" v-model="formValues.runName" placeholder="Run name" background="backgroundPrimary"
+                  outline class="inputbox mb-2">
                 </va-input>
-                <va-input
-                  label="Experiment"
-                  v-model="formValues.experimentName"
-                  placeholder="Run name"
-                  background="backgroundPrimary"
-                  outline
-                  class="inputbox mb-2"
-                >
-                  <template #appendInner >
-                    <va-button class="px-4" icon="search" @click="showPopup.experiment=!showPopup.experiment"></va-button>
+                <va-input label="Experiment" v-model="formValues.experimentName" placeholder="Run name"
+                  background="backgroundPrimary" outline class="inputbox mb-2">
+                  <template #appendInner>
+                    <va-button class="px-4" icon="search"
+                      @click="showPopup.experiment = !showPopup.experiment"></va-button>
                   </template>
                 </va-input>
-                 <ExperimentPopup v-model="showPopup.experiment" @getExperiment="getExperiment"/>
+                <ExperimentPopup v-model="showPopup.experiment" @getExperiment="getExperiment" />
               </div>
             </div>
             <div class="row mb-2">
@@ -73,51 +52,33 @@
                 <h6 class="va-h6 mb-2">종류</h6>
               </div>
               <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
-                <va-radio
-                  v-for="(option, index) in runTypeOptions"
-                  :key="index"
-                  v-model="formValues.runType"
-                  :option="option.value"
-                  :label="option.text"
-                  class="mb-2"
-                />
+                <va-radio v-for="(option, index) in runTypeOptions" :key="index" v-model="formValues.runType"
+                  :option="option.value" :label="option.text" class="mb-2" />
               </div>
               <div v-if="formValues.runType == 'schedule'" class="flex flex-col xl6 lg10 md12 sm12 xs12">
                 <div class="d-flex mb-2">
-                  <va-input
-                    label="최대 반복 횟수"
-                    v-model="formValues.maxRepeatCount"
-                    placeholder="Maximum Memory Gi"
-                    background="backgroundPrimary"
-                    outline
-                    class="inputbox mb-2 pr-4"
-                  />           
-                  <va-select 
-                    label="반복 간격"
-                    v-model="formValues.repeatTerm" 
-                    :options="repeatTermOptions" 
-                    background="backgroundPrimary"
-                    outline
-                    class="selectbox mb-2"
-                    />
+                  <va-input label="최대 반복 횟수" v-model="formValues.maxRepeatCount" placeholder="Maximum Memory Gi"
+                    background="backgroundPrimary" outline class="inputbox mb-2 pr-4" />
+                  <va-select label="반복 간격" v-model="formValues.repeatTerm" :options="repeatTermOptions"
+                    background="backgroundPrimary" outline class="selectbox mb-2" />
                 </div>
                 <div class="d-flex justify-start mb-2">
-                  <va-checkbox v-model="formValues.startDateYN" label="시작일" class="flex flex-col lg2 mb-2 mr-4 "/>
-                  <va-date-input class="flex flex-col lg4 px-2" />   
+                  <va-checkbox v-model="formValues.startDateYN" label="시작일" class="flex flex-col lg2 mb-2 mr-4 " />
+                  <va-date-input class="flex flex-col lg4 px-2" />
                   <va-time-input class="flex flex-col lg4 px-2" />
                 </div>
                 <div class="d-flex mb-2">
-                  <va-checkbox v-model="formValues.endDateYN" label="종료일" class="flex flex-col lg2 mb-2 mr-4"/>
-                  <va-date-input class="flex flex-col lg4 px-2"/>   
-                  <va-time-input class="flex flex-col lg4 px-2"/>
+                  <va-checkbox v-model="formValues.endDateYN" label="종료일" class="flex flex-col lg2 mb-2 mr-4" />
+                  <va-date-input class="flex flex-col lg4 px-2" />
+                  <va-time-input class="flex flex-col lg4 px-2" />
                 </div>
               </div>
             </div>
           </va-card-content>
           <va-card-actions>
-          <va-button @click="startRun">시작</va-button>
-          <va-button preset="secondary" border-color="secondary" @click="pageBack">취소</va-button>
-        </va-card-actions>
+            <va-button @click="startRun">시작</va-button>
+            <va-button preset="secondary" border-color="secondary" @click="pageBack">취소</va-button>
+          </va-card-actions>
 
         </va-card>
       </div>
@@ -151,7 +112,7 @@ const formValues = ref({
   runName: '',
   experimentId: '',
   experimentName: '',
-  runType:'once',
+  runType: 'once',
   maxRepeatCount: 10,
   repeatTerm: 'Hour',
   startDateYN: false,
@@ -159,52 +120,56 @@ const formValues = ref({
   startDate: '',
   startTime: '',
   endDate: '',
-  endTime : ''
+  endTime: ''
 })
 
 const runTypeOptions = ref([
-{ text: '단순 실행', value: 'once'},
-{ text: '반복 실행', value: 'schedule'},
+  { text: '단순 실행', value: 'once' },
+  { text: '반복 실행', value: 'schedule' },
 ])
 
 
 const repeatTermOptions = ref([
-  { text: 'Minute', value:'Minute'},
-  { text: 'Hour', value:'Hour'},
-  { text: 'Day', value:'Day'},
-  { text: 'Week', value:'Week'},
-  { text: 'Month', value:'Month'},
+  { text: 'Minute', value: 'Minute' },
+  { text: 'Hour', value: 'Hour' },
+  { text: 'Day', value: 'Day' },
+  { text: 'Week', value: 'Week' },
+  { text: 'Month', value: 'Month' },
 ])
 
 const pageBack = () => {
   router.back()
 }
 
-const startRun= () => {
+const startRun = () => {
   console.log("Run 실행")
+
+  console.log(formValues)
 }
 
-const getPipeline = (pipeline:any) => {
+const getPipeline = (pipeline: any) => {
   showPopup.value.pipeline = false;
-  formValues.value.pipelineId = pipeline.id;
-  formValues.value.pipelineName = pipeline.name;
+  formValues.value.pipelineId = pipeline.pipeline_id;
+  formValues.value.pipelineName = pipeline.display_name;
+  formValues.value.pipelineVersionName = '';
 }
 
-const getPipelineVersion = (pipelineVersion:any) => {
+const getPipelineVersion = (pipelineVersion: any) => {
+
   showPopup.value.pipelineVersion = false;
-  formValues.value.pipelineVersion = pipelineVersion.id;
-  formValues.value.pipelineVersionName = pipelineVersion.name;
+  formValues.value.pipelineVersion = pipelineVersion.pipeline_version_id;
+  formValues.value.pipelineVersionName = pipelineVersion.display_name;
 }
 
 
-const getExperiment = (experiment:any) => {
+const getExperiment = (experiment: any) => {
   showPopup.value.experiment = false;
   formValues.value.experimentId = experiment.id;
   formValues.value.experimentName = experiment.name;
 }
 
 const resetVersion = () => {
-  
+
 }
 
 
@@ -214,6 +179,7 @@ const resetVersion = () => {
 .inputbox {
   width: 100%;
 }
+
 .inputbox label {
   margin: 4px 0;
 }
@@ -247,5 +213,4 @@ const resetVersion = () => {
 .va-dropdown__content {
   z-index: 3;
 }
-
 </style>

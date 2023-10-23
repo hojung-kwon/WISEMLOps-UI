@@ -1,23 +1,11 @@
 <template>
-  <va-modal 
-    v-model="$props.showPopup" 
-    title="파이프라인"
-    mobile-fullscreen
-    hide-default-actions
-    size="large"
-  >
-    <va-data-table
-      :items="experiments ? experiments.result.experiments: []"
-      :no-data-html="noItemText"
-      :no-data-filtered-html="noItemText"
-      :columns="experimentColumns"
-      :per-page="pageSize"
-      :current-page="currentPage"
-      :filter="filterKeyword" 
-    >
+  <va-modal v-model="$props.showPopup" title="파이프라인" mobile-fullscreen hide-default-actions size="large">
+    <va-data-table :items="experiments?.result.experiments ? experiments.result.experiments : []"
+      :no-data-html="noItemText" :no-data-filtered-html="noItemText" :columns="experimentColumns" :per-page="pageSize"
+      :current-page="currentPage" :filter="filterKeyword">
       <template #cell(description)="{ rowIndex, rowData }">
         <div class="table-cell" :title="rowData.description">
-        {{ rowData.description }}
+          {{ rowData.description }}
         </div>
       </template>
       <template #cell(details)="{ rowIndex, rowData }">
@@ -28,10 +16,10 @@
       <template #bodyAppend>
         FOOTER
       </template>
-  
+
     </va-data-table>
   </va-modal>
-  </template>
+</template>
   
 <script setup lang="ts">
 
@@ -52,20 +40,20 @@ const noItemText: string = "No Item";
 
 const experiments = await getExperiments();
 
-const selectExperiment = (experiment:any) => {
+
+const selectExperiment = (experiment: any) => {
   emit('getExperiment', experiment)
 }
 
 </script>
   
-  <style>
-  .table-cell {
-    display: inline-block;
-    width: 300px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  </style>
+<style>
+.table-cell {
+  display: inline-block;
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
   
