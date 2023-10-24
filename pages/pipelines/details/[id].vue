@@ -93,14 +93,14 @@ const selectTab = async () => {
 
 onMounted(async () => {
   let pipelineVersion = version
-  // if (!pipelineVersion) {
-  //   pipelineVersion = details.value?.result['default_version']['id']
-  // }
+  if (!pipelineVersion) {
+    let pipelineVersions = await getPipelineVersions(id.value)
+    pipelineVersion = pipelineVersions.value?.result['pipeline_versions'][0]['pipeline_version_id']
+  }
   console.log(pipelineVersion)
-  // let template = await getPipelineVersionTemplate(pipelineVersion);
-  // yaml.value = [template.value?.result['template'].toString()]
 
-
+  let versionDetail = await getPipelineVersionDetail(id.value, pipelineVersion);
+  yaml.value = [JSON.stringify(ref(versionDetail.value?.result.pipeline_spec).value)]
 })
 </script>
 

@@ -110,7 +110,7 @@ export const getPipelines = async () => {
 }
 
 export const getPipelineVersions = async(pipeline_id:string | string[]) => {
-  const { data:pipelineVersions } = await useFetch<ResponseBody>(`/kfp/pipelines/${pipeline_id}/versions`, {
+  const { data:pipelineVersions } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${pipeline_id}`, {
     method: 'GET',
     baseURL: config.apiServer
   })
@@ -144,12 +144,12 @@ export const getPipelineDetails = async ( pipeline_id:string | string[], version
 }
 
 
-export const getPipelineVersionTemplate = async (version:string) => {
-  const { data:template } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${version}/template`, {
+export const getPipelineVersionDetail = async (id:string | string[], version:string) => {
+  const { data:pipeline_detail } = await useFetch<ResponseBody>(`/kfp/pipelines/versions/${id}/${version}`, {
     method: 'GET',
     baseURL: config.apiServer
   })
-  return template;
+  return pipeline_detail;
 }
 
 
