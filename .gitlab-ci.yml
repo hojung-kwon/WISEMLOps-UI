@@ -2,19 +2,6 @@ stages:
   - build
   - deploy
 
-build-package:
-  image: node:18-alpine3.17
-  stage: build
-  script:
-    - npm install
-    - npm run build
-  artifacts:
-    paths:
-      - build
-  only:
-    - main
-    - deploy
-
 deploy-container-image:
   stage: deploy
   image: docker:stable
