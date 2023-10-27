@@ -17,5 +17,3 @@ deploy-container-image:
   only:
     - main
     - deploy
-  dependencies:
-    - build-package
