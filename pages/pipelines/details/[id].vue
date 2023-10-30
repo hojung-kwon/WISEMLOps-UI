@@ -78,7 +78,8 @@ const version = route.query.version ? route.query.version.toString() : ''
 const details = await getPipelineDetails(id.value, version)
 console.log(details.value?.result)
 
-const pipeline_name = ref(details.value?.result.pipeline_name)
+
+const pipeline_name = ref(details.value?.result.display_name);
 const pipeline_description = ref(details.value?.result.pipeline_description)
 const pipeline = ref(details.value?.result)
 

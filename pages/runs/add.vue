@@ -18,26 +18,26 @@
                 <h6 class="va-h6 mb-2">기본정보</h6>
               </div>
               <div class="flex flex-col xl8 lg10 md12 sm12 xs12">
-                <va-input label="Pipeline" v-model="formValues.pipelineName" placeholder="pipeline name"
+                <va-input label="Pipeline" v-model="formValues.pipeline_name" placeholder="pipeline name"
                   background="backgroundPrimary" outline class="inputbox mb-2">
                   <template #appendInner>
                     <va-button class="px-4" icon="search" @click="showPopup.pipeline = !showPopup.pipeline"></va-button>
                   </template>
                 </va-input>
                 <PipelinePopup v-model="showPopup.pipeline" @getPipeline="getPipeline" />
-                <va-input label="Pipeline version" v-model="formValues.pipelineVersionName" placeholder="pipeline version"
+                <va-input label="Pipeline version" v-model="formValues.version_name" placeholder="pipeline version"
                   background="backgroundPrimary" outline class="inputbox mb-2">
                   <template #appendInner>
                     <va-button class="px-4" icon="search"
                       @click="showPopup.pipelineVersion = !showPopup.pipelineVersion"></va-button>
                   </template>
                 </va-input>
-                <PipelineVersionPopup v-model="showPopup.pipelineVersion" v-model:pipelineId="formValues.pipelineId"
+                <PipelineVersionPopup v-model="showPopup.pipelineVersion" v-model:pipelineId="formValues.pipeline_id"
                   @getPipelineVersion="getPipelineVersion" />
                 <va-input label="이름" v-model="formValues.runName" placeholder="Run name" background="backgroundPrimary"
                   outline class="inputbox mb-2">
                 </va-input>
-                <va-input label="Experiment" v-model="formValues.experimentName" placeholder="Run name"
+                <va-input label="Experiment" v-model="formValues.experiment_name" placeholder="Run name"
                   background="backgroundPrimary" outline class="inputbox mb-2">
                   <template #appendInner>
                     <va-button class="px-4" icon="search"
@@ -105,13 +105,18 @@ const showPopup = ref({
 })
 
 const formValues = ref({
-  pipelineId: '',
-  pipelineName: '',
-  pipelineVersion: '',
-  pipelineVersionName: '',
+  pipeline_id: '',
+  pipeline_name: '',
+  version_id: '',
+  version_name: '',
+  experiment_id: '',
+  experiment_name: '',
+  pipeline_root: '',
   runName: '',
-  experimentId: '',
-  experimentName: '',
+  job_name: '',
+  pipeline_package_path: '',
+  params: {},
+  enable_caching: true,
   runType: 'once',
   maxRepeatCount: 10,
   repeatTerm: 'Hour',
@@ -120,7 +125,20 @@ const formValues = ref({
   startDate: '',
   startTime: '',
   endDate: '',
-  endTime: ''
+  endTime: '',
+  pipeline_file: '',
+})
+
+
+const runBody = ref({
+  experiment_id: '',
+  job_name: '',
+  params: {},
+  pipeline_id: '',
+  version_id: '',
+  pipeline_root: '',
+  enable_caching: true,
+
 })
 
 const runTypeOptions = ref([
@@ -142,30 +160,52 @@ const pageBack = () => {
 }
 
 const startRun = () => {
-  console.log("Run 실행")
+  console.log(JSON.stringify(formValues.value))
+  runBody.value.job_name = formValues.value.runName;
+  runBody.value.experiment_id = formValues.value.experiment_id;
+  runBody.value.pipeline_id = formValues.value.pipeline_id;
+  runBody.value.version_id = formValues.value.version_id;
 
-  console.log(formValues)
+
+  console.log(JSON.stringify(runBody.value))
+  addRun(runBody)
+    .then(run => {
+
+      if (run.value && run.value.code == 102200) {
+        navigateTo(`/runs`, {
+          replace: true,
+          redirectCode: 301,
+          external: true
+        })
+
+      } else {
+        alert("오류발생" + run.value ? run.value?.result : '')
+      }
+    })
+
+
 }
 
 const getPipeline = (pipeline: any) => {
   showPopup.value.pipeline = false;
-  formValues.value.pipelineId = pipeline.pipeline_id;
-  formValues.value.pipelineName = pipeline.display_name;
-  formValues.value.pipelineVersionName = '';
+  formValues.value.pipeline_id = pipeline.pipeline_id;
+  formValues.value.pipeline_name = pipeline.display_name;
+  formValues.value.version_name = '';
 }
 
 const getPipelineVersion = (pipelineVersion: any) => {
 
   showPopup.value.pipelineVersion = false;
-  formValues.value.pipelineVersion = pipelineVersion.pipeline_version_id;
-  formValues.value.pipelineVersionName = pipelineVersion.display_name;
+  formValues.value.version_id = pipelineVersion.pipeline_version_id;
+  formValues.value.version_name = pipelineVersion.display_name;
 }
 
 
 const getExperiment = (experiment: any) => {
+  console.log(experiment)
   showPopup.value.experiment = false;
-  formValues.value.experimentId = experiment.id;
-  formValues.value.experimentName = experiment.name;
+  formValues.value.experiment_id = experiment.experiment_id;
+  formValues.value.experiment_name = experiment.display_name;
 }
 
 const resetVersion = () => {

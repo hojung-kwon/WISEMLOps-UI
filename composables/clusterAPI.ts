@@ -75,6 +75,17 @@ export const getRunDetails = async( run_id: string | string[] ) => {
   return runDetail;
 }
 
+export const addRun = async (body:any ) => {
+  const options = {
+    headers: { "Content-type": "application/json" },
+    method: 'POST',
+    baseURL: config.apiServer,
+    body: body.value
+
+  }
+  const { data:run } = await useFetch<ResponseBody>(`/kfp/runs`, options as object )
+  return run;
+}
 
 
 /* GET /kfp/experiment */
