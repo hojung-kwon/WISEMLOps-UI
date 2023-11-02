@@ -27,7 +27,7 @@
           </template>
         </va-tabs>
         <div v-if="curTab == 'graph'">
-          <GraphTab v-model="pipeline" />
+          <GraphTab v-model="pipeline" :run-details="run_details?.result['run_details']" />
         </div>
         <div v-if="curTab == 'runOutput'">
           <RunOutputTab v-model="runOutput" />
@@ -54,7 +54,6 @@ const router = useRouter()
 const pageTitle = ref('Runs')
 const id = ref(route.params.id);
 const toolButtons = ref(runDetailToolButton)
-
 
 
 const graph = ref({

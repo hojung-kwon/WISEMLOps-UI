@@ -38,9 +38,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(["sideEnable", "savePipeline"])
 
+
 onMounted(() => {
   const flow = props.pipeline
-  console.log(flow)
+
   if (flow) {
     const [x = 0, y = 0] = flow.position
     setNodes(flow.nodes)
@@ -62,7 +63,9 @@ onPaneClick((param: any) => {
 
 onNodeClick((param: any) => {
   const node: any = findNode(param.node.id);
+
   node.attribute = node.data.hasOwnProperty('attribute') ? node.data.attribute : {};
+
   emit('sideEnable', true, node)
 })
 
@@ -72,7 +75,6 @@ const saveNode = (nodeInfo: any) => {
     node.data.attribute = nodeInfo.attribute;
     node.label = nodeInfo.label;
     node.id = nodeInfo.id;
-    console.log(node);
   }
 }
 
@@ -83,8 +85,6 @@ const getPipeline = (e: any) => {
 defineExpose({ getPipeline, saveNode })
 
 </script>
-
-
 
 
 <style>

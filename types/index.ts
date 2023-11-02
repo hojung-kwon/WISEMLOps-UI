@@ -26,6 +26,7 @@ declare global {
     //   // image: string
     // }
     attribute: any;
+    details: any;
   }
 }
 

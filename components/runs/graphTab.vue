@@ -15,30 +15,44 @@ import Workflow from '~~/components/workflow/index.vue'
 import RunWorkflowDetail from '~~/components/runs/runWorkflowDetail.vue';
 
 
-const props = withDefaults(defineProps<{ modelValue: any, }>(), {})
+
+const props = withDefaults(defineProps<{ modelValue: any, runDetails: any }>(), {})
 const sideEnabled = ref(false);
 const workflow = ref();
-// const pipeline=ref({"nodes":[{"type":"toolbar","data":{"toolbar":{"position":"right"},"attribute":{"inputParams":"lklk","outputParams":"","args":"","command":"","image":""}},"events":{},"id":"random_node-1","label":"로딩","position":{"x":-62.408754988183716,"y":75.07897221397604}},{"type":"toolbar","data":{"toolbar":{"position":"right"},"attribute":{"inputParams":"","outputParams":"","args":"","command":"","image":""}},"events":{},"id":"random_node-2","label":"저장","position":{"x":-80.06472588815791,"y":196.49586534634363}}],"edges":[{"sourceHandle":"random_node-1__handle-bottom","targetHandle":"random_node-2__handle-top","type":"custom","source":"random_node-1","target":"random_node-2","data":{"text":"TEST"},"events":{},"id":"dndedge_1688536756340","markerEnd":"arrowclosed","sourceX":12.591245011816284,"sourceY":149.07897221397604,"targetX":-5.064725888157909,"targetY":192.49586534634363}],"position":[294.31750997636743,28.34205557204791],"zoom":2}); // 서버에서 읽어온 파이프라인 JSON값
 const pipeline = ref(props.modelValue);
+
 
 const nodeInfo = ref({
   id: '',
   label: '',
   attribute: {
-    inputParams: '',
-    outputParams: '',
-    args: '',
-    command: '',
-    image: ''
-  }
+    type: '',
+  },
+  status: '',
+  details: {}
 })
+
+onMounted(() => {
+  pipeline.value.nodes.forEach((node: any, i: number) => {
+    var runItem = props.runDetails['task_details'].find((item: any) => {
+      return item['display_name'] === node.data.attribute.type.replace(/_/g, "-");
+    })
+    pipeline.value.nodes[i].data.attribute.status = runItem['state']
+    pipeline.value.nodes[i].data.details = runItem
+  })
+})
+
 
 const sideEnable = (open: boolean, node: any) => {
   sideEnabled.value = open;
+
   if (open) {
     nodeInfo.value.id = node.id
     nodeInfo.value.label = node.label;
     nodeInfo.value.attribute = node.attribute
+    nodeInfo.value.status = node.attribute.status
+    nodeInfo.value.details = node.data.details;
+
   }
 }
 
